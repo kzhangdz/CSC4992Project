@@ -10,8 +10,13 @@ class DirectoryParser:
     @staticmethod
     def retrieveImages(directory):
         '''get all images in a directory'''
+        #imageList = [f for f in listdir(directory) if (isfile(join(directory, f)) and imghdr.what(join("images", f)) in DirectoryParser.imageExtensions)]
+        imageList = []
+        for file in listdir(directory):
+            currentExtension = imghdr.what(join("images", file)) #get file extensions
+            if currentExtension in DirectoryParser.imageExtensions: #guarantee image is chosen
+                imageList.append(file)    
         
-        imageList = [f for f in listdir(directory) if (isfile(join(directory, f)) and imghdr.what(join("images", f)) in DirectoryParser.imageExtensions)]
         return imageList
 
 if __name__ == "__main__":
