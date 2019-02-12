@@ -16,36 +16,46 @@ class Menu(tk.Tk):
         tk.Tk.wm_title(self, "Memory Game")
 
         # Initialize window  
-        self.frame = None
-        
-        self.switchFrame(HomeMenu)
+        container = tk.Frame(self)
 
-    def switchFrame(self, frameClass):
+        container.pack(side="top", fill="both", expand=True)
+
+        container.grid_rowconfigure(0, weight=1)
+        container.grid_columnconfigure(0, weight=1)
+
+        #create menu frames/pages
+        self.frames = {}
+
+        #add new frames in this for loop
+        for eachFrame in (HomeMenu, SinglePlayerMenu, TwoPlayerMenu):
+            frame = eachFrame(container, self)
+            self.frames[eachFrame] = frame
+            frame.grid(row=0, column = 0, sticky="nsew")
+
+        self.showFrame(HomeMenu)
+
+    def showFrame(self, controller):
         '''display function to show menu frames'''
-        '''destroy current frame and replace it'''
-        newFrame = frameClass(self)
-        if self.frame is not None:
-            self.frame.destroy()
-        self.frame = newFrame
-        self.frame.pack()
+        frame = self.frames[controller]
+        frame.tkraise() #send passed frame to front
 
 class HomeMenu(tk.Frame):
 
-    def __init__(self, master):
-        tk.Frame.__init__(self, master)
-        label = tk.Label(self, text="Memory Game", font=TITLE_FONT)
+    def __init__(self, parent, controller):
+        tk.Frame.__init__(self, parent)
+        label = ttk.Label(self, text="Memory Game", font=TITLE_FONT)
         label.pack(padx=20, pady=10, side=tk.TOP)
         #label.grid(row=1,column=1)
 
         #create single player button
-        singlePlayerButton = tk.Button(self, text="Single Player",
-                                       command=lambda: master.switchFrame(SinglePlayerMenu))
+        singlePlayerButton = ttk.Button(self, text="Single Player",
+                                       command=lambda: controller.showFrame(SinglePlayerMenu))
         singlePlayerButton.pack(padx=10, pady=10, side=tk.LEFT)
         #singlePlayerButton.grid(row=3,column=1)
 
         #create two player button
-        twoPlayerButton = tk.Button(self, text="Two Player",
-                                     command=lambda: master.switchFrame(TwoPlayerMenu))
+        twoPlayerButton = ttk.Button(self, text="Two Player",
+                                     command=lambda: controller.showFrame(TwoPlayerMenu))
         twoPlayerButton.pack(padx=10, pady=10, side=tk.RIGHT)
         #twoPlayerButton.grid(row=4,column=1)
 
@@ -55,14 +65,14 @@ class HomeMenu(tk.Frame):
 
 class SinglePlayerMenu(tk.Frame):
 
-    def __init__(self, master):
-        tk.Frame.__init__(self, master)
+    def __init__(self, parent, controller):
+        tk.Frame.__init__(self, parent)
         label = tk.Label(self, text="Single Player", font=TITLE_FONT)
         label.pack(padx=10, pady=10)
 
         #create back button
         backButton = tk.Button(self, text="Back",
-                                       command=lambda: master.switchFrame(HomeMenu))
+                                       command=lambda: controller.showFrame(HomeMenu))
 
         #getting image directory
         #FIXME: use directoryParser class eventually
@@ -75,14 +85,14 @@ class SinglePlayerMenu(tk.Frame):
 
 class TwoPlayerMenu(tk.Frame):
 
-    def __init__(self, master):
-        tk.Frame.__init__(self, master)
+    def __init__(self, parent, controller):
+        tk.Frame.__init__(self, parent)
         label = tk.Label(self, text="Two Player", font=TITLE_FONT)
         label.pack(padx=10, pady=10)
 
         #create back button
         backButton = tk.Button(self, text="Back",
-                                       command=lambda: master.switchFrame(HomeMenu))
+                                       command=lambda: controller.showFrame(HomeMenu))
         backButton.pack()
                 
 
