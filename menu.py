@@ -1,4 +1,5 @@
 import tkinter as tk
+from tkinter import ttk
 #from homemenu import HomeMenu
 
 #define default fonts
@@ -10,7 +11,10 @@ class Menu(tk.Tk):
         # initialize tkinter
         tk.Tk.__init__(self, *args, **kwargs)
 
-        # Initialize window
+        # set window title
+        tk.Tk.wm_title(self, "Memory Game")
+
+        # Initialize window  
         container = tk.Frame(self)
 
         container.pack(side="top", fill="both", expand=True)
@@ -22,7 +26,7 @@ class Menu(tk.Tk):
         self.frames = {}
 
         #add new frames in this for loop
-        for eachFrame in (HomeMenu, SinglePlayerMenu):
+        for eachFrame in (HomeMenu, SinglePlayerMenu, TwoPlayerMenu):
             frame = eachFrame(container, self)
             self.frames[eachFrame] = frame
             frame.grid(row=0, column = 0, sticky="nsew")
@@ -38,31 +42,43 @@ class HomeMenu(tk.Frame):
 
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
-        label = tk.Label(self, text="Memory Game", font=TITLE_FONT)
-        label.pack(pady=10, padx=10)
+        label = ttk.Label(self, text="Memory Game", font=TITLE_FONT)
+        label.pack(padx=20, pady=10, side=tk.TOP)
 
         #create single player button
-        singlePlayerButton = tk.Button(self, text="Single Player",
+        singlePlayerButton = ttk.Button(self, text="Single Player",
                                        command=lambda: controller.showFrame(SinglePlayerMenu))
-        singlePlayerButton.pack()
+        singlePlayerButton.pack(padx=10, pady=10, side=tk.LEFT)
 
         #create two player button
-        #FIXME: add command to show frame
-        twoPlayerButton = tk.Button(self, text="Two Player")
-        twoPlayerButton.pack()
+        twoPlayerButton = ttk.Button(self, text="Two Player",
+                                     command=lambda: controller.showFrame(TwoPlayerMenu))
+        twoPlayerButton.pack(padx=10, pady=10, side=tk.RIGHT)
 
 class SinglePlayerMenu(tk.Frame):
 
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
-        label = tk.Label(self, text="Single Player", font=TITLE_FONT)
-        label.pack(pady=10, padx=10)
+        label = ttk.Label(self, text="Single Player", font=TITLE_FONT)
+        label.pack(padx=10, pady=10)
 
         #create back button
-        backButton = tk.Button(self, text="Back",
+        backButton = ttk.Button(self, text="Back",
                                        command=lambda: controller.showFrame(HomeMenu))
         backButton.pack()
-        
+
+class TwoPlayerMenu(tk.Frame):
+
+    def __init__(self, parent, controller):
+        tk.Frame.__init__(self, parent)
+        label = ttk.Label(self, text="Two Player", font=TITLE_FONT)
+        label.pack(padx=10, pady=10)
+
+        #create back button
+        backButton = ttk.Button(self, text="Back",
+                                       command=lambda: controller.showFrame(HomeMenu))
+        backButton.pack()
+                
 
 if __name__ == "__main__":
     menus = Menu()
