@@ -7,7 +7,7 @@ from constant import *
 pygame.init()
 
 #set window size
-display = pygame.display.set_mode((DISPLAY_WIDTH, DISPLAY_HEIGHT))
+gameDisplay = pygame.display.set_mode((DISPLAY_WIDTH, DISPLAY_HEIGHT))
 
 #set window name
 pygame.display.set_caption('Memory Game')

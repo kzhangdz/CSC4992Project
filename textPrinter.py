@@ -18,6 +18,6 @@ class TextPrinter:
         largeText = pygame.font.Font('freesansbold.ttf', TITLE_SIZE)
         textSurface, textRectangle = TextPrinter.textObjects(text, largeText, BLACK)
         textRectangle.center = (TITLE_X, TITLE_Y)
-        display.blit(textSurface, textRectangle)
+        gameDisplay.blit(textSurface, textRectangle)
 
         #pygame.display.update()

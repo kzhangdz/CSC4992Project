@@ -13,6 +13,8 @@ class Card:
         imgDirectory = os.path.join(os.path.abspath(os.curdir), 'images', 'menu', 'back_button.gif')
         self.cardImage = pygame.image.load(imgDirectory)'''
 
+    '''def __init__(self, *args, **kwargs)'''
+
     def __init__(self, images):
         '''inititialize a card'''
         '''images: list of images (back and front)'''
@@ -25,11 +27,15 @@ class Card:
     def setStatus(self, newStatus):
         self.status = newStatus
 
-    '''def __init__(self, *args, **kwargs)'''
-
-    def display(self):
+    def showCard(self, x, y):
         '''show card to user'''
-        pass
+        #USE SWITCH STATEMENT TO MEET REQUIREMENT
+        if self.status == CardStatus.back:
+            gameDisplay.blit(self.cardImages[0], (x,y))
+        elif self.status == CardStatus.front:
+            gameDisplay.blit(self.cardImages[1], (x,y))
+        elif self.status == CardStatus.solved:
+            pass
 
 #test code
 if __name__ == "__main__":

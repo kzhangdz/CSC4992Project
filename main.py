@@ -3,15 +3,14 @@ from constant import *
 import os.path
 from textPrinter import TextPrinter
 from pygameEnvironment import *
-#import card
-#import cardDeck
+from card import Card
 
 #test image
 imgDirectory = os.path.join(os.path.abspath(os.curdir), 'images', 'menu', 'back_button.gif')
 testImg = pygame.image.load(imgDirectory)
 
 def showTestImg(x,y):
-    display.blit(testImg, (x,y))
+    gameDisplay.blit(testImg, (x,y))
 
 #coordinates
 x = (DISPLAY_WIDTH * 0.45)
@@ -28,9 +27,8 @@ def gameLoop():
                 quit()
             #print(event)
 
-        
         #create background
-        display.fill(FOREST_GREEN)
+        gameDisplay.fill(FOREST_GREEN)
         TextPrinter.displayTitle("Memory Game")
         showTestImg(x,y)
         pygame.display.update()
