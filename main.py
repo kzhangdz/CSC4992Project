@@ -1,27 +1,19 @@
 import pygame
-
-pygame.init()
-
-#declare size
-displayWidth = 800
-displayHeight = 600
-
-#declare colors
-black = (0,0,0)
-white = (255,255,255)
-red = (255,0,0)
+from constant import *
+import os.path
+from textPrinter import TextPrinter
+from pygameEnvironment import *
 
 #test image
-#testImg = pygame.image.load('back_button.gif')
+imgDirectory = os.path.join(os.path.abspath(os.curdir), 'images', 'menu', 'back_button.gif')
+testImg = pygame.image.load(imgDirectory)
 
-# set window size
-display = pygame.display.set_mode((displayWidth, displayHeight))
+def showTestImg(x,y):
+    display.blit(testImg, (x,y))
 
-#set window name
-pygame.display.set_caption('Memory Game')
-
-#set up clock
-clock = pygame.time.Clock()
+#coordinates
+x = (DISPLAY_WIDTH * 0.45)
+y = (DISPLAY_HEIGHT * 0.8)
 
 def gameLoop():
     #create game loop
@@ -34,6 +26,11 @@ def gameLoop():
                 quit()
             #print(event)
 
+        
+        #create background
+        display.fill(FOREST_GREEN)
+        TextPrinter.displayTitle("Memory Game")
+        showTestImg(x,y)
         pygame.display.update()
 
         #set frame rate
