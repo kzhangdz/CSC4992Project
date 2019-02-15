@@ -3,6 +3,8 @@ from constant import *
 import os.path
 from textPrinter import TextPrinter
 from pygameEnvironment import *
+#import card
+#import cardDeck
 
 #test image
 imgDirectory = os.path.join(os.path.abspath(os.curdir), 'images', 'menu', 'back_button.gif')
