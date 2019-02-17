@@ -16,22 +16,23 @@ def showTestImg(x,y):
 x = (DISPLAY_WIDTH * 0.45)
 y = (DISPLAY_HEIGHT * 0.8)
 
+def main_menu():
+    #create background
+    gameDisplay.fill(FOREST_GREEN)
+    TextPrinter.displayTitle("Memory Game")
+    showTestImg(x,y)
+    pygame.display.update()
+
 def gameLoop():
     #create game loop
-    gameExit = False
-    while not gameExit:
+    running = True
+    while running:
+        main_menu()
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
-                #gameExit = True
                 pygame.quit()
                 quit()
             #print(event)
-
-        #create background
-        gameDisplay.fill(FOREST_GREEN)
-        TextPrinter.displayTitle("Memory Game")
-        showTestImg(x,y)
-        pygame.display.update()
 
         #set frame rate
         clock.tick(30)
