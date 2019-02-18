@@ -1,25 +1,24 @@
 from pygameEnvironment import *
 import os.path
 
+'''may be able to tie the card to a button
+Clicking the button will change the card.'''
+
 class CardStatus:
     '''enum for card state'''
     back, front, solved = range(3)
     # _unused, back, front, solved = range(4)
 
 class Card:
-    '''def __init__(self):
-        self.status = CardStatus.back
-        #call directoryParser for cardImage
-        imgDirectory = os.path.join(os.path.abspath(os.curdir), 'images', 'menu', 'back_button.gif')
-        self.cardImage = pygame.image.load(imgDirectory)'''
-
-    '''def __init__(self, *args, **kwargs)'''
-
     def __init__(self, images):
         '''inititialize a card'''
         '''images: list of images (back and front)'''
         self.status = CardStatus.back
         self.cardImages = images #list of images (back and front)
+        #FIXME: add a pygame.Rect. This will be important in clicking.
+        #See button.py for examples
+        #May also add a draw and isClicked function
+        #When refactoring, it may be best to derive from Button class
 
     def getStatus(self):
         return self.status
