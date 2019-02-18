@@ -1,4 +1,7 @@
 '''important constants for pygame'''
+#declare frames per second
+FPS = 30
+
 #declare size
 DISPLAY_WIDTH = 800
 DISPLAY_HEIGHT = 600
