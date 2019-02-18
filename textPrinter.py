@@ -21,3 +21,10 @@ class TextPrinter:
         gameDisplay.blit(textSurface, textRectangle)
 
         #pygame.display.update()
+
+    def displayText(text, position, size, color):
+        '''displays text'''
+        textToPrint = pygame.font.Font('freesansbold.ttf', size)
+        textSurface, textRectangle = TextPrinter.textObjects(text, textToPrint, color)
+        textRectangle.center = position
+        gameDisplay.blit(textSurface, textRectangle)

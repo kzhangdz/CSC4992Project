@@ -42,7 +42,7 @@ def mainMenu():
 
 def singlePlayerMenu():
     #buttons
-    backButton = Button((DISPLAY_WIDTH*0.1, DISPLAY_HEIGHT*0.1), (100, 80), RED, "Back")
+    backButton = Button((DISPLAY_WIDTH*0.05, DISPLAY_HEIGHT*0.05), (80, 40), RED, "Back")
     
     #game loop
     running = True
@@ -63,6 +63,7 @@ def singlePlayerMenu():
 
             gameDisplay.fill(FOREST_GREEN)
             backButton.draw(gameDisplay)
+            TextPrinter.displayText("Single Player", (DISPLAY_WIDTH*0.50, DISPLAY_HEIGHT*0.3), 75, BLACK)
             pygame.display.update()
 
             #set frames per second
@@ -70,7 +71,7 @@ def singlePlayerMenu():
 
 def multiPlayerMenu():
     #buttons
-    backButton = Button((DISPLAY_WIDTH*0.1, DISPLAY_HEIGHT*0.1), (100, 80), RED, "Back")
+    backButton = Button((DISPLAY_WIDTH*0.05, DISPLAY_HEIGHT*0.05), (80, 40), RED, "Back")
     
     #game loop
     running = True
@@ -91,6 +92,7 @@ def multiPlayerMenu():
 
             gameDisplay.fill(FOREST_GREEN)
             backButton.draw(gameDisplay)
+            TextPrinter.displayText("Multi Player", (DISPLAY_WIDTH*0.50, DISPLAY_HEIGHT*0.3), 75, BLACK)
             pygame.display.update()
 
             #set frames per second
