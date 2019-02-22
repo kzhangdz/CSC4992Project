@@ -1,5 +1,6 @@
 import pygame
 from pygameEnvironment import *
+import os
 
 #button class from:
 #https://stackoverflow.com/questions/47981842/how-do-i-create-a-pygame-with-multiple-menus
@@ -29,3 +30,41 @@ class Button:
         if event.type == pygame.MOUSEBUTTONDOWN:
             if event.button == 1:
                 return self.rect.collidepoint(event.pos)
+
+class ImageButton:
+    
+    def __init__(self, position, imageDirectory):
+        imageFile = pygame.image.load(imageDirectory)
+
+        #tie pygame.Surface to pygame.image
+        #get image size
+        size = imageFile.get_rect().size
+
+        self.image = pygame.Surface(size)
+        self.rect = pygame.Rect((0,0), size)
+
+        imageRect = imageFile.get_rect()
+        imageRect.center = self.rect.center
+
+        self.image.blit(imageFile, imageRect)
+
+        # set after centering text
+        self.rect.topleft = position
+
+    def draw(self, screen):
+        screen.blit(self.image, self.rect)
+
+    def isClicked(self, event):
+        if event.type == pygame.MOUSEBUTTONDOWN:
+            if event.button == 1:
+                return self.rect.collidepoint(event.pos)
+
+if __name__ == "__main__":
+    imgDirectory = os.path.join(os.path.abspath(os.curdir), 'images', 'menu', 'back_button.gif')
+    
+    newButton = ImageButton((100, 100), imgDirectory)
+    gameDisplay.fill(FOREST_GREEN)
+    newButton.draw(gameDisplay)
+
+    pygame.display.update()
+
