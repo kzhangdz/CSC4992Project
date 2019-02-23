@@ -108,6 +108,11 @@ def multiPlayerMenu():
             #set frames per second
             clock.tick(FPS)
 
+def gameplayMenu():
+    #needs to pass in parameters that define game state
+    #alternatively, options menu should open in a new frame above the current one
+    pass
+
 if __name__ == "__main__":
     mainMenu()
     quit()
