@@ -4,12 +4,18 @@ import pygame
 from pygameEnvironment import *
 from constant import *
 from button import Button
+from button import ImageButton
 from textPrinter import TextPrinter
+import os
 
 def mainMenu():
     #buttons
     singlePlayerButton = Button((DISPLAY_WIDTH*0.20, DISPLAY_HEIGHT*0.5), (200, 80), RED, "Single Player")
     multiPlayerButton = Button((DISPLAY_WIDTH*0.50, DISPLAY_HEIGHT*0.5), (200, 80), RED, "Multi Player")
+
+    #test button
+    imgDirectory = os.path.join(os.path.abspath(os.curdir), 'images', 'menu', 'button_test.png')
+    testButton = ImageButton((DISPLAY_WIDTH*0.9, DISPLAY_HEIGHT*0.9), imgDirectory)
 
     #game loop
     running = True
@@ -30,11 +36,15 @@ def mainMenu():
             if multiPlayerButton.isClicked(event):
                 #call multi player menu
                 multiPlayerMenu()
+            if testButton.isClicked(event):
+                singlePlayerMenu()
 
         gameDisplay.fill(FOREST_GREEN)
         singlePlayerButton.draw(gameDisplay)
         multiPlayerButton.draw(gameDisplay)
         TextPrinter.displayTitle("Memory Game")
+        #test button
+        testButton.draw(gameDisplay)
         pygame.display.update()
 
         #set frames per second
@@ -97,3 +107,7 @@ def multiPlayerMenu():
 
             #set frames per second
             clock.tick(FPS)
+
+if __name__ == "__main__":
+    mainMenu()
+    quit()

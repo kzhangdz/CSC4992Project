@@ -32,6 +32,7 @@ class Button:
                 return self.rect.collidepoint(event.pos)
 
 class ImageButton:
+    '''works with png, but not gif'''
     
     def __init__(self, position, imageDirectory):
         imageFile = pygame.image.load(imageDirectory)
@@ -40,6 +41,7 @@ class ImageButton:
         #get image size
         size = imageFile.get_rect().size
 
+        #make surface and rect the same size as image
         self.image = pygame.Surface(size)
         self.rect = pygame.Rect((0,0), size)
 
@@ -60,7 +62,7 @@ class ImageButton:
                 return self.rect.collidepoint(event.pos)
 
 if __name__ == "__main__":
-    imgDirectory = os.path.join(os.path.abspath(os.curdir), 'images', 'menu', 'back_button.gif')
+    imgDirectory = os.path.join(os.path.abspath(os.curdir), 'images', 'menu', 'back_button.png')
     
     newButton = ImageButton((100, 100), imgDirectory)
     gameDisplay.fill(FOREST_GREEN)
