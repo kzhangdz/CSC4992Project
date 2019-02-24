@@ -26,26 +26,10 @@ class Checkbox(ImageButton):
     def switchState(self):
         if self.state == True:
             self.state = False
-            #newCheckbox = Checkbox(self.pos, falseImageDirectory)
-            #self = newCheckbox
-            imageFile = pygame.image.load(falseImageDirectory)
-            imageRect = imageFile.get_rect()
-            imageRect.center = self.rect.center
-            self.image.blit(imageFile, imageRect)
-            self.draw(gameDisplay)
-            pygame.display.update()
-            print(self.state)
+            #print(self.state)
         elif self.state == False:
             self.state = True
-            #newCheckbox = Checkbox(self.pos, trueImageDirectory)
-            #self = newCheckbox
-            imageFile = pygame.image.load(trueImageDirectory)
-            imageRect = imageFile.get_rect()
-            imageRect.center = self.rect.center
-            self.image.blit(imageFile, imageRect)
-            self.draw(gameDisplay)
-            pygame.display.update()
-            print(self.state)
+            #print(self.state)
 
     def isClicked(self, event):
         if event.type == pygame.MOUSEBUTTONDOWN:

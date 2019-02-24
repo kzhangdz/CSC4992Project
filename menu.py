@@ -8,6 +8,7 @@ from button import ImageButton
 from checkbox import *
 from textPrinter import TextPrinter
 import os
+import copy
 
 def mainMenu():
     #buttons
@@ -104,8 +105,12 @@ def multiPlayerMenu():
                 #call main menu
                 mainMenu()
             if musicCheckbox.isClicked(event):
-                #call main menu
+                #check or uncheck music box
                 musicCheckbox.switchState()
+                if musicCheckbox.state == True:
+                    musicCheckbox = Checkbox((DISPLAY_WIDTH*0.5, DISPLAY_HEIGHT*0.5), trueImageDirectory)
+                elif musicCheckbox.state == False:
+                    musicCheckbox = Checkbox((DISPLAY_WIDTH*0.5, DISPLAY_HEIGHT*0.5))
 
             gameDisplay.fill(FOREST_GREEN)
             backButton.draw(gameDisplay)
