@@ -87,6 +87,8 @@ def multiPlayerMenu():
 
     #test checkbox
     musicCheckbox = Checkbox((DISPLAY_WIDTH*0.5, DISPLAY_HEIGHT*0.5))
+
+    #FIXME: Call checkMusic() function. if musicBox.state == True: ...
     
     #game loop
     running = True
