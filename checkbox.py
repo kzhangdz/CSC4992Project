@@ -4,7 +4,7 @@ import os
 from button import ImageButton
 
 trueImageDirectory = os.path.join(os.path.abspath(os.curdir), 'images', 'menu', 'checkbox_true.png')
-falseImageDirectory = os.path.join(os.path.abspath(os.curdir), 'images', 'menu', 'button_test.png')
+falseImageDirectory = os.path.join(os.path.abspath(os.curdir), 'images', 'menu', 'checkbox_false.png')
 
 
 class Checkbox(ImageButton):
