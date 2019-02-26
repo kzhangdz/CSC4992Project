@@ -56,7 +56,7 @@ Complete this table one row for each project. You should list at least one proje
 |------------------------------|---------------------------------|--------------------------------------------|-----------------------|--------------------------------------------|
 | SpaceShooter(https://github.com/tasdikrahman/spaceShooter) | Player class, main menu, sound effects + music | PyGame, random, os.path, __future__ | latest PyGame version | ga6198 |
 | PyGame(Memory Game)(https://github.com/importerror/Pygame) | box functions, shapes/colors , click events(highlighting boxes) | PyGame | Python 2.7 or more | er8015 |
-| [Project name 3](http://URL) | feature 1, feature 2, feature 3 | modules, architectures, frameworks, etc... | OS, modules, versions | Access ID of student who found this source |
+| Solar Wolf (https://github.com/pygame/solarwolf) | classes, loading menu | Pygame, loading menu, graphics | updated to Python 3 | ei1757 |
 | [Project name 4](http://URL) | feature 1, feature 2, feature 3 | modules, architectures, frameworks, etc... | OS, modules, versions | Access ID of student who found this source |
 | [Project name 4](http://URL) | feature 1, feature 2, feature 3 | modules, architectures, frameworks, etc... | OS, modules, versions | Access ID of student who found this source |
 | [Project name 4](http://URL) | feature 1, feature 2, feature 3 | modules, architectures, frameworks, etc... | OS, modules, versions | Access ID of student who found this source |
