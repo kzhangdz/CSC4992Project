@@ -5,8 +5,10 @@ from pygameEnvironment import *
 from constant import *
 from button import Button
 from button import ImageButton
+from checkbox import *
 from textPrinter import TextPrinter
 import os
+import copy
 
 def mainMenu():
     #buttons
@@ -82,6 +84,11 @@ def singlePlayerMenu():
 def multiPlayerMenu():
     #buttons
     backButton = Button((DISPLAY_WIDTH*0.05, DISPLAY_HEIGHT*0.05), (80, 40), RED, "Back")
+
+    #test checkbox
+    musicCheckbox = Checkbox((DISPLAY_WIDTH*0.5, DISPLAY_HEIGHT*0.5))
+
+    #FIXME: Call checkMusic() function. if musicBox.state == True: ...
     
     #game loop
     running = True
@@ -99,10 +106,20 @@ def multiPlayerMenu():
             if backButton.isClicked(event):
                 #call main menu
                 mainMenu()
+            if musicCheckbox.isClicked(event):
+                #check or uncheck music box
+                musicCheckbox.switchState()
+                if musicCheckbox.state == True:
+                    musicCheckbox = Checkbox((DISPLAY_WIDTH*0.5, DISPLAY_HEIGHT*0.5), trueImageDirectory)
+                elif musicCheckbox.state == False:
+                    musicCheckbox = Checkbox((DISPLAY_WIDTH*0.5, DISPLAY_HEIGHT*0.5))
 
             gameDisplay.fill(FOREST_GREEN)
             backButton.draw(gameDisplay)
             TextPrinter.displayText("Multi Player", (DISPLAY_WIDTH*0.50, DISPLAY_HEIGHT*0.3), 75, BLACK)
+
+            #test checkbox
+            musicCheckbox.draw(gameDisplay)
             pygame.display.update()
 
             #set frames per second

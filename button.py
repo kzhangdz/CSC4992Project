@@ -9,7 +9,7 @@ class Button:
     
     def __init__(self, position, size, color, text):
 
-        self.image = pygame.Surface(size)
+        self.image = pygame.Surface(size, pygame.SRCALPHA, 32)
         self.image.fill(color)
         self.rect = pygame.Rect((0,0), size)
 
@@ -42,7 +42,7 @@ class ImageButton:
         size = imageFile.get_rect().size
 
         #make surface and rect the same size as image
-        self.image = pygame.Surface(size)
+        self.image = pygame.Surface(size, pygame.SRCALPHA, 32) #SRCALPHA and 32 set transparent surface
         self.rect = pygame.Rect((0,0), size)
 
         imageRect = imageFile.get_rect()
@@ -62,7 +62,8 @@ class ImageButton:
                 return self.rect.collidepoint(event.pos)
 
 if __name__ == "__main__":
-    imgDirectory = os.path.join(os.path.abspath(os.curdir), 'images', 'menu', 'back_button.png')
+    #imgDirectory = os.path.join(os.path.abspath(os.curdir), 'images', 'menu', 'back_button.png')
+    imgDirectory = os.path.join(os.path.abspath(os.curdir), 'images', 'menu', 'button_test.png')
     
     newButton = ImageButton((100, 100), imgDirectory)
     gameDisplay.fill(FOREST_GREEN)
