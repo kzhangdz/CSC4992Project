@@ -5,6 +5,8 @@ from pygameEnvironment import *
 from constant import *
 from button import Button
 from button import ImageButton
+from card import *
+from cardDeck import *
 from checkbox import *
 from textPrinter import TextPrinter
 import os
@@ -18,6 +20,9 @@ def mainMenu():
     #test button
     imgDirectory = os.path.join(os.path.abspath(os.curdir), 'images', 'menu', 'button_test.png')
     testButton = ImageButton((DISPLAY_WIDTH*0.9, DISPLAY_HEIGHT*0.9), imgDirectory)
+
+    #test CardDeck
+    testDeck = CardDeck("theme1", 2)
 
     #game loop
     running = True
@@ -47,6 +52,11 @@ def mainMenu():
         TextPrinter.displayTitle("Memory Game")
         #test button
         testButton.draw(gameDisplay)
+        #test cardDeck
+        testDeck.deck[0].showCard(300, 500)
+            #pygame.time.wait(3000)
+        testDeck.deck[0].setStatus(CardStatus.front)
+         
         pygame.display.update()
 
         #set frames per second
