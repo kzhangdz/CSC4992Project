@@ -1,4 +1,5 @@
-import card
+from card import *
+from constant import *
 from directoryParser import DirectoryParser
 import random
 from pygameEnvironment import *
@@ -10,27 +11,19 @@ class CardDeck:
 
     def loadCards(theme, numCards):
         '''returns a list of cards'''
-        #get image directories
+        #get image directories. Each variable is a list
         backDirectory = DirectoryParser.retrieveCardImages(theme, "back")
         frontDirectories = DirectoryParser.retrieveCardImages(theme, "front")
-
-        #convert image directories to pygame images
-        backImages = []
-        frontImages = []
-        for image in backDirectory:
-            backImage = pygame.image.load(image)
-            backImages.append(backImage)
-        for image in frontDirectories:
-            frontImage = pygame.image.load(image)
-            frontImages.append(frontImage)
+        solvedDirectory = DirectoryParser.retrieveCardImages(theme, "solved")
 
         #randomize front card images
-        random.shuffle(frontImages)
+        random.shuffle(frontDirectories)
 
         #create list of cards with unique images
         cardList = []
-        for i in range(numCards//2):
-            newCard = card.Card([backImages[0], frontImages[i]])
+        for i in range(numCards//2): #only go up to half, b/c each card needs a pair
+            #FIXME: need a way to pass in varying position
+            newCard = card.Card(, [backDirectory[0], frontDirectories[i], solvedDirectory[0]], CardStatus.back)
             cardList.append(newCard)
 
         #double card list so each card has a pair
