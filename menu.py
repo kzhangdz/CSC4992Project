@@ -5,6 +5,7 @@ from pygameEnvironment import *
 from constant import *
 from button import Button
 from button import ImageButton
+from card import *
 from checkbox import *
 from textPrinter import TextPrinter
 import os
@@ -19,6 +20,10 @@ def mainMenu():
     imgDirectory = os.path.join(os.path.abspath(os.curdir), 'images', 'menu', 'button_test.png')
     testButton = ImageButton((DISPLAY_WIDTH*0.9, DISPLAY_HEIGHT*0.9), imgDirectory)
 
+    #test card
+    imgDirectories = [imgDirectory, imgDirectory, imgDirectory]
+    testCard = Card((DISPLAY_WIDTH*0.9, DISPLAY_HEIGHT*0.5), imgDirectories, CardStatus.back)
+
     #game loop
     running = True
 
@@ -32,21 +37,27 @@ def mainMenu():
                  if event.key == pygame.K_ESCAPE: # quit when pressing escape
                      pygame.quit()
 
+            #declare on click responses
             if singlePlayerButton.isClicked(event):
                 #call single player menu
                 singlePlayerMenu()
             if multiPlayerButton.isClicked(event):
                 #call multi player menu
                 multiPlayerMenu()
+                
             if testButton.isClicked(event):
                 singlePlayerMenu()
 
+        #draw out display
         gameDisplay.fill(FOREST_GREEN)
         singlePlayerButton.draw(gameDisplay)
         multiPlayerButton.draw(gameDisplay)
         TextPrinter.displayTitle("Memory Game")
         #test button
         testButton.draw(gameDisplay)
+        #test card
+        testCard.draw(gameDisplay)
+        
         pygame.display.update()
 
         #set frames per second

@@ -1,5 +1,6 @@
 from pygameEnvironment import *
 import os.path
+from button import ImageButton
 
 '''may be able to tie the card to a button
 Clicking the button will change the card.'''
@@ -9,16 +10,17 @@ class CardStatus:
     back, front, solved = range(3)
     # _unused, back, front, solved = range(4)
 
-class Card:
-    def __init__(self, images):
-        '''inititialize a card'''
-        '''images: list of images (back and front)'''
-        self.status = CardStatus.back
-        self.cardImages = images #list of images (back and front)
-        #FIXME: add a pygame.Rect. This will be important in clicking.
-        #See button.py for examples
-        #May also add a draw and isClicked function
-        #When refactoring, it may be best to derive from Button class
+class Card(ImageButton):
+    def __init__(self, position, imageDirectories, state):
+        'pass in list of image directories, one for each card state'
+        'state: CardStatus variable'
+        self.status = state
+        self.cardImageDirectories = imageDirectories
+
+        #choose image directory based on state
+        currentImageDirectory = self.cardImageDirectories[self.status]
+
+        ImageButton.__init__(self, position, currentImageDirectory)                
 
     def getStatus(self):
         return self.status
@@ -26,31 +28,18 @@ class Card:
     def setStatus(self, newStatus):
         self.status = newStatus
 
-    def showCard(self, x, y):
-        '''show card to user'''
-        #USE SWITCH STATEMENT TO MEET REQUIREMENT
-        if self.status == CardStatus.back:
-            gameDisplay.blit(self.cardImages[0], (x,y))
-        elif self.status == CardStatus.front:
-            gameDisplay.blit(self.cardImages[1], (x,y))
-        elif self.status == CardStatus.solved:
-            pass
-
 #test code
 if __name__ == "__main__":
     imgDirectory = os.path.join(os.path.abspath(os.curdir), 'images', 'menu', 'back_button.gif')
-    image = pygame.image.load(imgDirectory)
-    images = [image, image]
+    imgDirectories = [imgDirectory, imgDirectory]
 
-    newCard = Card(images)
+    newCard = Card((200, 200), imgDirectories, CardStatus.back)
     print(CardStatus.back)
     print(CardStatus.front)
     print(CardStatus.solved)
 
     if newCard.status == CardStatus.back:
         print("back")
-
-    print(newCard.cardImages)
 
     newCard.setStatus(CardStatus.solved)
     print(newCard.getStatus())
