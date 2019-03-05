@@ -21,6 +21,9 @@ class Card:
         #May also add a draw and isClicked function
         #When refactoring, it may be best to derive from Button class
 
+        imageSize = self.cardImages[CardStatus.back]
+        #initialize surface and rect. How will you decide the rect position?
+
     def getStatus(self):
         return self.status
 

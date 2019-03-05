@@ -138,7 +138,36 @@ def multiPlayerMenu():
 def gameplayMenu():
     #needs to pass in parameters that define game state
     #alternatively, options menu should open in a new frame above the current one
-    pass
+
+    #declare card deck
+    #currentDeck = CardDeck("theme1", passedInCardNum)
+    #currentDeck = CardDeck("theme1", 16)
+
+    #game loop
+    running = True
+
+    while running:
+        #events
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                exit()
+            elif event.type == pygame.KEYDOWN:
+                 if event.key == pygame.K_ESCAPE: # quit when pressing escape
+                     pygame.quit()
+
+            
+
+            for card in currentDeck.deck:
+                pass
+                #card.showCard(positionVar)
+                
+
+            gameDisplay.fill(FOREST_GREEN)
+            pygame.display.update()
+
+            #set frames per second
+            clock.tick(FPS)
 
 if __name__ == "__main__":
     mainMenu()
