@@ -10,11 +10,10 @@ class CardStatus:
     # _unused, back, front, solved = range(4)
 
 class Card:
-    def __init__(self, imageDirectories, images):
+    def __init__(self, images):
         '''inititialize a card'''
         '''images: list of images (back and front)'''
         self.status = CardStatus.back
-        self.cardImageDirectories = imageDirectories #use imageDirectories for comparison
         self.cardImages = images #list of images (back and front)
         #FIXME: add a pygame.Rect. This will be important in clicking.
         #See button.py for examples
@@ -26,14 +25,6 @@ class Card:
 
     def setStatus(self, newStatus):
         self.status = newStatus
-
-    def compareFrontImage(self, otherCard):
-        'return true if both cards have the same front image DIRECTORY'
-        'pass in Card object'
-        if self.cardImageDirectories[CardStatus.front] == otherCard.cardImageDirectories[CardStatus.front]:
-            return True
-        else:
-            return False
 
     def showCard(self, x, y):
         '''show card to user'''
