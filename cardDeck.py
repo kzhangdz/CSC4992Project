@@ -8,12 +8,14 @@ class CardDeck:
     '''class to load a deck of cards'''
     def __init__(self, theme, numCards):
         self.deck = CardDeck.loadCards(theme, numCards)
+        self.cardCount = numCards
 
     def loadCards(theme, numCards):
         '''returns a list of cards'''
         #get image directories
         backDirectory = DirectoryParser.retrieveCardImages(theme, "back")
-        frontDirectories = DirectoryParser.retrieveCardImages(theme, "front")  
+        frontDirectories = DirectoryParser.retrieveCardImages(theme, "front")
+        solvedDirectory = DirectoryParser.retrieveCardImages(theme, "solved")
 
         #randomize front card image directories
         random.shuffle(frontDirectories)
@@ -39,7 +41,7 @@ class CardDeck:
             frontImage = pygame.image.load(image)
             frontImages.append(frontImage)'''
 
-        imageDirectories = [backDirectory, neededFrontDirectories]
+        imageDirectories = [backDirectory, neededFrontDirectories, solvedDirectory]
 
         #load cards
         cardList = []
@@ -69,7 +71,7 @@ class CardDeck:
 
         #initialize first row
         for i in range(0, 5):
-            newCard = Card((xPos, yPosRow1), [imageDirectories[0][0], imageDirectories[1][i]])
+            newCard = Card((xPos, yPosRow1), [imageDirectories[0][0], imageDirectories[1][i], imageDirectories[2][0]])
             cardList.append(newCard)
             xPos = xPos + (DISPLAY_WIDTH * 0.1)
 
@@ -78,13 +80,13 @@ class CardDeck:
 
         #initialize second row
         for i in range(5, 10):
-            newCard = Card((xPos, yPosRow2), [imageDirectories[0][0], imageDirectories[1][i]])
+            newCard = Card((xPos, yPosRow2), [imageDirectories[0][0], imageDirectories[1][i], imageDirectories[2][0]])
             cardList.append(newCard)
             xPos = xPos + (DISPLAY_WIDTH * 0.1)
 
         return cardList
 
-    def checkDeckStatus(self):
+    def checkDeckStatus(self, score):
         'analyze if cards should be switched to solved state or flipped back down'
         'scan through cards to see if two cards are flipped face up'
         'if they match, switch them to solved'
@@ -93,28 +95,58 @@ class CardDeck:
 
         #find index of cards that are face up
         for i in range(len(self.deck)):
-            if deck[i].status == CardStatus.front:
+            if self.deck[i].status == CardStatus.front:
                 frontCardIndexList.append(i)
 
-        if frontCardIndexList == 2: #check that exactly 2 cards are face up
+        if len(frontCardIndexList) == 2: #check that exactly 2 cards are face up
             firstCardIndex = frontCardIndexList[0]
             secondCardIndex = frontCardIndexList[1]
 
             #if card images match, switched them to solved
-            if deck[firstCardIndex].compareFrontImage(deck[secondCardIndex]):
-                #FIXME: add a wait function
+            if self.deck[firstCardIndex].compareFrontImage(self.deck[secondCardIndex]):
+                #display card front images
+                self.deck[firstCardIndex].showCard()
+                self.deck[secondCardIndex].showCard()
+                pygame.display.update()
 
-                deck[firstCardIndex].setStatus(CardStatus.solved)
-                deck[secondCardIndex].setStatus(CardStatus.solved)
+                #wait a bit
+                pygame.time.wait(800)
 
-                #FIXME: increase score
+                #update state to solved
+                self.deck[firstCardIndex].setStatus(CardStatus.solved)
+                self.deck[secondCardIndex].setStatus(CardStatus.solved)
+
+                #increase score
+                score.raiseScore()
+                score.displayScore()
+                pygame.display.update()
             else:
-                #FIXME: add a wait function
+                #display card front images
+                self.deck[firstCardIndex].showCard()
+                self.deck[secondCardIndex].showCard()
+                pygame.display.update()
 
-                deck[firstCardIndex].setStatus(CardStatus.back)
-                deck[secondCardIndex].setStatus(CardStatus.back)
+                #wait a bit
+                pygame.time.wait(800)
 
-        #may need to use showCard() function again
+                #update state to back
+                self.deck[firstCardIndex].setStatus(CardStatus.back)
+                self.deck[secondCardIndex].setStatus(CardStatus.back)
+
+        #may need to call checkAllFaceUp function
+
+    def checkAllFaceUp(self):
+        'if all cards face up, return True and send to results screen'
+        scoredCardList = []
+        for card in self.deck: #add cards to list if they are solved
+            if card.status == CardStatus.solved:
+                scoredCardList.append(card)
+
+        if len(scoredCardList) == self.cardCount: #if all cards are solved
+            return True
+        else:
+            return False
+        
 
 #test code
 if __name__ == "__main__":

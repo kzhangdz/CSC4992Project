@@ -8,6 +8,7 @@ from button import ImageButton
 from card import *
 from cardDeck import *
 from checkbox import *
+from score import *
 from textPrinter import TextPrinter
 import os
 import copy
@@ -142,6 +143,9 @@ def gameplayMenu(numCards):
     #declare card deck
     currentDeck = CardDeck("theme1", numCards)
 
+    #declare score
+    currentScore = Score()
+
     #game loop
     running = True
 
@@ -163,13 +167,40 @@ def gameplayMenu(numCards):
 
             #background
             gameDisplay.fill(FOREST_GREEN)
+            currentScore.displayScore()
 
             #show cards
             for card in currentDeck.deck:
                 card.showCard() 
 
             #check state of deck to see if cards should be flipped
-            #checkDeckStatus()
+            currentDeck.checkDeckStatus(currentScore)
+            
+            pygame.display.update()
+
+            #if all cards face up, send user to results screen
+            if currentDeck.checkAllFaceUp():
+                resultMenu(currentScore)
+
+            #set frames per second
+            clock.tick(FPS)
+
+def resultMenu(score):
+    running = True
+
+    while running:
+        #events
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                exit()
+            elif event.type == pygame.KEYDOWN:
+                 if event.key == pygame.K_ESCAPE: # quit when pressing escape
+                     pygame.quit()   
+
+            #background
+            gameDisplay.fill(FOREST_GREEN)
+            score.displayScore()
             
             pygame.display.update()
 

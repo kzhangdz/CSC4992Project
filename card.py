@@ -34,7 +34,7 @@ class Card:
     def loadCardImages(self, imageDirectories):
         backImage = pygame.image.load(imageDirectories[CardStatus.back])
         frontImage = pygame.image.load(imageDirectories[CardStatus.front])
-        #solvedImage = pygame.image.load(imageDirectories[CardStatus.solved])
+        solvedImage = pygame.image.load(imageDirectories[CardStatus.solved])
 
         #image size
         #width = DISPLAY_WIDTH * 0.05
@@ -42,10 +42,10 @@ class Card:
 
         backImage = pygame.transform.scale(backImage, Card.imageDimensions)
         frontImage = pygame.transform.scale(frontImage, Card.imageDimensions)
-        #solvedImage = pygame.transform.scale(solvedImage, ())
+        solvedImage = pygame.transform.scale(solvedImage, Card.imageDimensions)
 
-        imageList = [backImage, frontImage]
-        #imageList = [backImage, frontImage, solvedImage]
+        #imageList = [backImage, frontImage]
+        imageList = [backImage, frontImage, solvedImage]
         return imageList
 
     def getStatus(self):
@@ -81,7 +81,8 @@ class Card:
             gameDisplay.blit(self.surf, self.rect)
             gameDisplay.blit(self.cardImages[CardStatus.front], self.position)
         elif self.status == CardStatus.solved:
-            pass
+            gameDisplay.blit(self.surf, self.rect)
+            gameDisplay.blit(self.cardImages[CardStatus.solved], self.position)
 
 #test code
 if __name__ == "__main__":
