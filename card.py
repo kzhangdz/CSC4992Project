@@ -10,19 +10,28 @@ class CardStatus:
     # _unused, back, front, solved = range(4)
 
 class Card:
-    def __init__(self, imageDirectories, images):
+    def __init__(self, position, imageDirectories):
         '''inititialize a card'''
-        '''images: list of images (back and front)'''
+        '''imageDirectories: list of image directories (back, front, solved)'''
         self.status = CardStatus.back
         self.cardImageDirectories = imageDirectories #use imageDirectories for comparison
-        self.cardImages = images #list of images (back and front)
+        self.cardImages = self.loadCardImages(imageDirectories) #list of images (back, front, solved)
         #FIXME: add a pygame.Rect. This will be important in clicking.
         #See button.py for examples
         #May also add a draw and isClicked function
         #When refactoring, it may be best to derive from Button class
 
-        imageSize = self.cardImages[CardStatus.back]
-        #initialize surface and rect. How will you decide the rect position?
+        '''imageSize = self.cardImages[CardStatus.back]
+        #initialize surface and rect. How will you decide the rect position?'''
+
+    def loadCardImages(self, imageDirectories):
+        backImage = pygame.image.load(imageDirectories[CardStatus.back])
+        frontImage = pygame.image.load(imageDirectories[CardStatus.front])
+        #solvedImage = pygame.image.load(imageDirectories[CardStatus.solved])
+
+        imageList = [backImage, frontImage]
+        #imageList = [backImage, frontImage, solvedImage]
+        return imageList
 
     def getStatus(self):
         return self.status
@@ -38,13 +47,13 @@ class Card:
         else:
             return False
 
-    def showCard(self, x, y):
+    def showCard(self):
         '''show card to user'''
         #USE SWITCH STATEMENT TO MEET REQUIREMENT
         if self.status == CardStatus.back:
-            gameDisplay.blit(self.cardImages[0], (x,y))
+            gameDisplay.blit(self.cardImages[CardStatus.back], self.position)
         elif self.status == CardStatus.front:
-            gameDisplay.blit(self.cardImages[1], (x,y))
+            gameDisplay.blit(self.cardImages[CardStatus.front], self.position)
         elif self.status == CardStatus.solved:
             pass
 
