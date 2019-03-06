@@ -84,6 +84,38 @@ class CardDeck:
 
         return cardList
 
+    def checkDeckStatus(self):
+        'analyze if cards should be switched to solved state or flipped back down'
+        'scan through cards to see if two cards are flipped face up'
+        'if they match, switch them to solved'
+        'if not, flip them back down after WAITING'
+        frontCardIndexList = [] # list of index for cards that are face up
+
+        #find index of cards that are face up
+        for i in range(len(self.deck)):
+            if deck[i].status == CardStatus.front:
+                frontCardIndexList.append(i)
+
+        if frontCardIndexList == 2: #check that exactly 2 cards are face up
+            firstCardIndex = frontCardIndexList[0]
+            secondCardIndex = frontCardIndexList[1]
+
+            #if card images match, switched them to solved
+            if deck[firstCardIndex].compareFrontImage(deck[secondCardIndex]):
+                #FIXME: add a wait function
+
+                deck[firstCardIndex].setStatus(CardStatus.solved)
+                deck[secondCardIndex].setStatus(CardStatus.solved)
+
+                #FIXME: increase score
+            else:
+                #FIXME: add a wait function
+
+                deck[firstCardIndex].setStatus(CardStatus.back)
+                deck[secondCardIndex].setStatus(CardStatus.back)
+
+        #may need to use showCard() function again
+
 #test code
 if __name__ == "__main__":
     deck0 = CardDeck("theme1", 10)

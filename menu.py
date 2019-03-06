@@ -140,7 +140,6 @@ def gameplayMenu(numCards):
     #alternatively, options menu should open in a new frame above the current one
 
     #declare card deck
-    #currentDeck = CardDeck("theme1", passedInCardNum)
     currentDeck = CardDeck("theme1", numCards)
 
     #game loop
@@ -156,10 +155,21 @@ def gameplayMenu(numCards):
                  if event.key == pygame.K_ESCAPE: # quit when pressing escape
                      pygame.quit()   
 
+            #switch card state if clicked
+            for card in currentDeck.deck:
+                if card.isClicked(event):
+                    print(card.cardImageDirectories[card.status], card.position)
+                    card.switchStatus()
+
+            #background
             gameDisplay.fill(FOREST_GREEN)
 
+            #show cards
             for card in currentDeck.deck:
                 card.showCard() 
+
+            #check state of deck to see if cards should be flipped
+            #checkDeckStatus()
             
             pygame.display.update()
 
