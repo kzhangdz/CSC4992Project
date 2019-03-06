@@ -10,12 +10,13 @@ class CardStatus:
     # _unused, back, front, solved = range(4)
 
 class Card:
-    def __init__(self, position, imageDirectories):
+    def __init__(self, pos, imageDirectories):
         '''inititialize a card'''
         '''imageDirectories: list of image directories (back, front, solved)'''
         self.status = CardStatus.back
         self.cardImageDirectories = imageDirectories #use imageDirectories for comparison
         self.cardImages = self.loadCardImages(imageDirectories) #list of images (back, front, solved)
+        self.position = pos
         #FIXME: add a pygame.Rect. This will be important in clicking.
         #See button.py for examples
         #May also add a draw and isClicked function
@@ -28,6 +29,14 @@ class Card:
         backImage = pygame.image.load(imageDirectories[CardStatus.back])
         frontImage = pygame.image.load(imageDirectories[CardStatus.front])
         #solvedImage = pygame.image.load(imageDirectories[CardStatus.solved])
+
+        #image size
+        #width = DISPLAY_WIDTH * 0.05
+        #height = DISPLAY_HEIGHT * 0.07
+
+        backImage = pygame.transform.scale(backImage, (72, 100))
+        frontImage = pygame.transform.scale(frontImage, (72, 100))
+        #solvedImage = pygame.transform.scale(solvedImage, ())
 
         imageList = [backImage, frontImage]
         #imageList = [backImage, frontImage, solvedImage]

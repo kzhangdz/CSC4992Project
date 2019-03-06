@@ -21,9 +21,6 @@ def mainMenu():
     imgDirectory = os.path.join(os.path.abspath(os.curdir), 'images', 'menu', 'button_test.png')
     testButton = ImageButton((DISPLAY_WIDTH*0.9, DISPLAY_HEIGHT*0.9), imgDirectory)
 
-    #test CardDeck
-    testDeck = CardDeck("theme1", 2)
-
     #game loop
     running = True
 
@@ -52,10 +49,6 @@ def mainMenu():
         TextPrinter.displayTitle("Memory Game")
         #test button
         testButton.draw(gameDisplay)
-        #test cardDeck
-        testDeck.deck[0].showCard(300, 500)
-            #pygame.time.wait(3000)
-        testDeck.deck[0].setStatus(CardStatus.front)
          
         pygame.display.update()
 
@@ -65,7 +58,8 @@ def mainMenu():
 def singlePlayerMenu():
     #buttons
     backButton = Button((DISPLAY_WIDTH*0.05, DISPLAY_HEIGHT*0.05), (80, 40), RED, "Back")
-    
+    gameplayButton = Button((DISPLAY_WIDTH*0.5, DISPLAY_HEIGHT*0.5), (80, 40), RED, "Start w/ 10 cards")    
+
     #game loop
     running = True
 
@@ -82,9 +76,15 @@ def singlePlayerMenu():
             if backButton.isClicked(event):
                 #call main menu
                 mainMenu()
+            if gameplayButton.isClicked(event):
+                #call main menu
+                gameplayMenu(10)
 
             gameDisplay.fill(FOREST_GREEN)
             backButton.draw(gameDisplay)
+
+            gameplayButton.draw(gameDisplay)
+            
             TextPrinter.displayText("Single Player", (DISPLAY_WIDTH*0.50, DISPLAY_HEIGHT*0.3), 75, BLACK)
             pygame.display.update()
 
@@ -135,13 +135,13 @@ def multiPlayerMenu():
             #set frames per second
             clock.tick(FPS)
 
-def gameplayMenu():
+def gameplayMenu(numCards):
     #needs to pass in parameters that define game state
     #alternatively, options menu should open in a new frame above the current one
 
     #declare card deck
     #currentDeck = CardDeck("theme1", passedInCardNum)
-    #currentDeck = CardDeck("theme1", 16)
+    currentDeck = CardDeck("theme1", numCards)
 
     #game loop
     running = True
@@ -154,16 +154,13 @@ def gameplayMenu():
                 exit()
             elif event.type == pygame.KEYDOWN:
                  if event.key == pygame.K_ESCAPE: # quit when pressing escape
-                     pygame.quit()
-
-            
-
-            for card in currentDeck.deck:
-                pass
-                #card.showCard(positionVar)
-                
+                     pygame.quit()   
 
             gameDisplay.fill(FOREST_GREEN)
+
+            for card in currentDeck.deck:
+                card.showCard() 
+            
             pygame.display.update()
 
             #set frames per second
