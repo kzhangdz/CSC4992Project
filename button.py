@@ -21,7 +21,7 @@ class Button:
         self.image.blit(text, text_rect)
 
         # set after centering text
-        self.rect.topleft = position
+        self.rect.center = position
 
     def draw(self, screen):
         screen.blit(self.image, self.rect)

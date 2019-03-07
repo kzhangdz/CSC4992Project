@@ -15,8 +15,8 @@ import copy
 
 def mainMenu():
     #buttons
-    singlePlayerButton = Button((DISPLAY_WIDTH*0.20, DISPLAY_HEIGHT*0.5), (200, 80), RED, "Single Player")
-    multiPlayerButton = Button((DISPLAY_WIDTH*0.50, DISPLAY_HEIGHT*0.5), (200, 80), RED, "Multi Player")
+    singlePlayerButton = Button((DISPLAY_WIDTH*0.33, DISPLAY_HEIGHT*0.5), (200, 80), RED, "Single Player")
+    multiPlayerButton = Button((DISPLAY_WIDTH*0.66, DISPLAY_HEIGHT*0.5), (200, 80), RED, "Multi Player")
 
     #test button
     imgDirectory = os.path.join(os.path.abspath(os.curdir), 'images', 'menu', 'button_test.png')
@@ -58,7 +58,7 @@ def mainMenu():
 
 def singlePlayerMenu():
     #buttons
-    backButton = Button((DISPLAY_WIDTH*0.05, DISPLAY_HEIGHT*0.05), (80, 40), RED, "Back")
+    backButton = Button((DISPLAY_WIDTH*0.1, DISPLAY_HEIGHT*0.1), (80, 40), RED, "Back")
     gameplayButton = Button((DISPLAY_WIDTH*0.5, DISPLAY_HEIGHT*0.5), (80, 40), RED, "Start w/ 10 cards")    
 
     #game loop
@@ -94,7 +94,7 @@ def singlePlayerMenu():
 
 def multiPlayerMenu():
     #buttons
-    backButton = Button((DISPLAY_WIDTH*0.05, DISPLAY_HEIGHT*0.05), (80, 40), RED, "Back")
+    backButton = Button((DISPLAY_WIDTH*0.1, DISPLAY_HEIGHT*0.1), (80, 40), RED, "Back")
 
     #test checkbox
     musicCheckbox = Checkbox((DISPLAY_WIDTH*0.5, DISPLAY_HEIGHT*0.5))
@@ -141,7 +141,7 @@ def gameplayMenu(numCards):
     #alternatively, options menu should open in a new frame above the current one
 
     #declare button
-    backButton = Button((DISPLAY_WIDTH*0.05, DISPLAY_HEIGHT*0.05), (80, 40), RED, "Back")
+    backButton = Button((DISPLAY_WIDTH*0.1, DISPLAY_HEIGHT*0.1), (80, 40), RED, "Back")
 
     #declare card deck
     currentDeck = CardDeck("theme1", numCards)
@@ -195,7 +195,7 @@ def gameplayMenu(numCards):
 
 def resultMenu(score):
     #buttons
-    menuButton = Button((DISPLAY_WIDTH*0.3, DISPLAY_HEIGHT*0.5), (200, 80), RED, "Return to Menu")
+    menuButton = Button((DISPLAY_WIDTH*0.5, DISPLAY_HEIGHT*0.6), (200, 80), RED, "Return to Menu")
 
     running = True
 

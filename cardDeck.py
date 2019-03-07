@@ -31,16 +31,6 @@ class CardDeck:
         #shuffle image directories again
         random.shuffle(neededFrontDirectories)
 
-        '''#convert image directories to pygame images
-        backImages = []
-        frontImages = []
-        for image in backDirectory:
-            backImage = pygame.image.load(image)
-            backImages.append(backImage)
-        for image in neededFrontDirectories:
-            frontImage = pygame.image.load(image)
-            frontImages.append(frontImage)'''
-
         imageDirectories = [backDirectory, neededFrontDirectories, solvedDirectory]
 
         #load cards
@@ -50,22 +40,13 @@ class CardDeck:
         elif numCards == 20:
             pass
         
-        '''#create list of cards with unique images
-        cardList = []
-        for i in range(numCards//2):
-            imgDirectories = [backDirectory[0], frontDirectories[i]]
-            imgList = [backImages[0], frontImages[i]]
-
-            newCard = card.Card(imgDirectories, imgList)
-            cardList.append(newCard)'''
-        
         return cardList
 
     def load10Cards(theme, imageDirectories):
         #define positions
         yPosRow1 = DISPLAY_HEIGHT * 0.3 # y position of row 1 of cards
-        yPosRow2 = DISPLAY_HEIGHT * 0.5 # y position of row 2 of cards
-        xPos = DISPLAY_WIDTH * 0.2 #x position of first card in row
+        yPosRow2 = DISPLAY_HEIGHT * 0.6 # y position of row 2 of cards
+        xPos = DISPLAY_WIDTH * 0.15 #x position of first card in row
 
         cardList = []
 
@@ -73,16 +54,16 @@ class CardDeck:
         for i in range(0, 5):
             newCard = Card((xPos, yPosRow1), [imageDirectories[0][0], imageDirectories[1][i], imageDirectories[2][0]])
             cardList.append(newCard)
-            xPos = xPos + (DISPLAY_WIDTH * 0.1)
+            xPos = xPos + (DISPLAY_WIDTH * 0.15)
 
         #reset xPos
-        xPos = DISPLAY_WIDTH * 0.2
+        xPos = DISPLAY_WIDTH * 0.15
 
         #initialize second row
         for i in range(5, 10):
             newCard = Card((xPos, yPosRow2), [imageDirectories[0][0], imageDirectories[1][i], imageDirectories[2][0]])
             cardList.append(newCard)
-            xPos = xPos + (DISPLAY_WIDTH * 0.1)
+            xPos = xPos + (DISPLAY_WIDTH * 0.15)
 
         return cardList
 

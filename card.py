@@ -3,6 +3,7 @@ import os.path
 
 '''may be able to tie the card to a button
 Clicking the button will change the card.'''
+#FIXME: When refactoring, it may be best to derive from Button class
 
 class CardStatus:
     '''enum for card state'''
@@ -10,7 +11,7 @@ class CardStatus:
     # _unused, back, front, solved = range(4)
 
 class Card:
-    imageDimensions = (72, 100)
+    imageDimensions = (87, 115)
 
     def __init__(self, pos, imageDirectories):
         '''inititialize a card'''
@@ -19,32 +20,24 @@ class Card:
         self.cardImageDirectories = imageDirectories #use imageDirectories for comparison
         self.cardImages = self.loadCardImages(imageDirectories) #list of images (back, front, solved)
         self.position = pos
-        #FIXME: add a pygame.Rect. This will be important in clicking.
-        #See button.py for examples
-        #May also add a draw and isClicked function
-        #When refactoring, it may be best to derive from Button class
 
-        '''imageSize = self.cardImages[CardStatus.back]
-        #initialize surface and rect. How will you decide the rect position?'''
         self.surf = pygame.Surface(Card.imageDimensions, pygame.SRCALPHA, 32)
         self.rect = pygame.Rect(self.position, Card.imageDimensions)
 
         self.surf.blit(self.cardImages[CardStatus.back], self.rect)
 
     def loadCardImages(self, imageDirectories):
+        #load images
         backImage = pygame.image.load(imageDirectories[CardStatus.back])
         frontImage = pygame.image.load(imageDirectories[CardStatus.front])
         solvedImage = pygame.image.load(imageDirectories[CardStatus.solved])
 
-        #image size
-        #width = DISPLAY_WIDTH * 0.05
-        #height = DISPLAY_HEIGHT * 0.07
-
+        #scale images to correct size
         backImage = pygame.transform.scale(backImage, Card.imageDimensions)
         frontImage = pygame.transform.scale(frontImage, Card.imageDimensions)
         solvedImage = pygame.transform.scale(solvedImage, Card.imageDimensions)
 
-        #imageList = [backImage, frontImage]
+        #store images in list
         imageList = [backImage, frontImage, solvedImage]
         return imageList
 
