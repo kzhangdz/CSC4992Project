@@ -51,7 +51,7 @@ class ImageButton:
         self.image.blit(imageFile, imageRect)
 
         # set after centering text
-        self.rect.topleft = position
+        self.rect.center = position
 
     def draw(self, screen):
         screen.blit(self.image, self.rect)

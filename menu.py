@@ -140,6 +140,9 @@ def gameplayMenu(numCards):
     #needs to pass in parameters that define game state
     #alternatively, options menu should open in a new frame above the current one
 
+    #declare button
+    backButton = Button((DISPLAY_WIDTH*0.05, DISPLAY_HEIGHT*0.05), (80, 40), RED, "Back")
+
     #declare card deck
     currentDeck = CardDeck("theme1", numCards)
 
@@ -159,6 +162,10 @@ def gameplayMenu(numCards):
                  if event.key == pygame.K_ESCAPE: # quit when pressing escape
                      pygame.quit()   
 
+            if backButton.isClicked(event):
+                #call main menu
+                singlePlayerMenu()
+
             #switch card state if clicked
             for card in currentDeck.deck:
                 if card.isClicked(event):
@@ -167,6 +174,7 @@ def gameplayMenu(numCards):
 
             #background
             gameDisplay.fill(FOREST_GREEN)
+            backButton.draw(gameDisplay)
             currentScore.displayScore()
 
             #show cards
@@ -186,6 +194,9 @@ def gameplayMenu(numCards):
             clock.tick(FPS)
 
 def resultMenu(score):
+    #buttons
+    menuButton = Button((DISPLAY_WIDTH*0.3, DISPLAY_HEIGHT*0.5), (200, 80), RED, "Return to Menu")
+
     running = True
 
     while running:
@@ -198,9 +209,18 @@ def resultMenu(score):
                  if event.key == pygame.K_ESCAPE: # quit when pressing escape
                      pygame.quit()   
 
+            if menuButton.isClicked(event):
+                #call main menu
+                mainMenu()
+
             #background
             gameDisplay.fill(FOREST_GREEN)
+
+            TextPrinter.displayText("Congratulations!", (DISPLAY_WIDTH*0.5, DISPLAY_HEIGHT*0.4), 75, BLACK)
+            
             score.displayScore()
+
+            menuButton.draw(gameDisplay)
             
             pygame.display.update()
 
