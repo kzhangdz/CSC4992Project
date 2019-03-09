@@ -98,6 +98,7 @@ class CardDeck:
                 self.deck[secondCardIndex].setStatus(CardStatus.solved)
 
                 #increase score
+                score.raiseMultiplier()
                 score.raiseScore()
                 score.displayScore()
                 pygame.display.update()
@@ -113,6 +114,9 @@ class CardDeck:
                 #update state to back
                 self.deck[firstCardIndex].setStatus(CardStatus.back)
                 self.deck[secondCardIndex].setStatus(CardStatus.back)
+
+                #reset score multiplier
+                score.resetMultiplier()
 
         #may need to call checkAllFaceUp function
 

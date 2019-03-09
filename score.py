@@ -6,11 +6,20 @@ from constant import *
 class Score:
     def __init__(self):
         self.score = 0
+        self.multiplier = 0 #how many cards have been matched in a row
+
+    def raiseMultiplier(self):
+        self.multiplier += 1
+
+    def resetMultiplier(self):
+        self.multiplier = 0
 
     def raiseScore(self):
         'increase score'
         #FIXME: Implement a more complex algorithm
-        self.score += 100
+        bonus = self.multiplier * 50
+        scoreAddition = 100 + bonus
+        self.score = self.score + scoreAddition
 
     def displayScore(self):
         x = DISPLAY_WIDTH * 0.75
