@@ -188,12 +188,12 @@ def gameplayMenu(numCards):
 
             #if all cards face up, send user to results screen
             if currentDeck.checkAllFaceUp():
-                resultMenu(currentScore)
+                resultMenu(currentScore, "Congratulations!")
 
             #set frames per second
             clock.tick(FPS)
 
-def resultMenu(score):
+def resultMenu(score, displayMessage):
     #buttons
     menuButton = Button((DISPLAY_WIDTH*0.5, DISPLAY_HEIGHT*0.6), (200, 80), RED, "Return to Menu")
 
@@ -216,7 +216,7 @@ def resultMenu(score):
             #background
             gameDisplay.fill(FOREST_GREEN)
 
-            TextPrinter.displayText("Congratulations!", (DISPLAY_WIDTH*0.5, DISPLAY_HEIGHT*0.4), 75, BLACK)
+            TextPrinter.displayText(displayMessage, (DISPLAY_WIDTH*0.5, DISPLAY_HEIGHT*0.4), 75, BLACK)
             
             score.displayScore()
 
