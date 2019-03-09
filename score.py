@@ -21,6 +21,14 @@ class Score:
         scoreAddition = 100 + bonus
         self.score = self.score + scoreAddition
 
+    def displayMultiplier(self):
+        x = DISPLAY_WIDTH * 0.15
+        y = DISPLAY_HEIGHT * 0.9
+        TextPrinter.displayText('Multiplier:', (x, y), 30, WHITE)
+
+        x = DISPLAY_WIDTH * 0.3
+        TextPrinter.displayText(str(self.multiplier), (x, y), 30, WHITE)
+
     def displayScore(self):
         x = DISPLAY_WIDTH * 0.75
         y = DISPLAY_HEIGHT * 0.1

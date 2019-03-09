@@ -176,6 +176,7 @@ def gameplayMenu(numCards):
             gameDisplay.fill(FOREST_GREEN)
             backButton.draw(gameDisplay)
             currentScore.displayScore()
+            currentScore.displayMultiplier()
 
             #show cards
             for card in currentDeck.deck:
