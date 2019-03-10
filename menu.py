@@ -8,6 +8,8 @@ from button import ImageButton
 from card import *
 from cardDeck import *
 from checkbox import *
+from directoryParser import *
+from inputBox import *
 from score import *
 from textPrinter import TextPrinter
 import os
@@ -197,7 +199,8 @@ def gameplayMenu(numCards):
 def resultMenu(score, displayMessage):
     #buttons
     menuButton = Button((DISPLAY_WIDTH*0.5, DISPLAY_HEIGHT*0.6), (200, 80), RED, "Return to Menu")
-
+    highScoreButton = Button((DISPLAY_WIDTH*0.5, DISPLAY_HEIGHT*0.8), (200, 80), RED, "Go to HighScore")
+    
     running = True
 
     while running:
@@ -213,6 +216,9 @@ def resultMenu(score, displayMessage):
             if menuButton.isClicked(event):
                 #call main menu
                 mainMenu()
+            if highScoreButton.isClicked(event):
+                #call main menu
+                highScoreMenu(score)
 
             #background
             gameDisplay.fill(FOREST_GREEN)
@@ -222,6 +228,48 @@ def resultMenu(score, displayMessage):
             score.displayScore()
 
             menuButton.draw(gameDisplay)
+
+            highScoreButton.draw(gameDisplay)
+            
+            pygame.display.update()
+
+            #set frames per second
+            clock.tick(FPS)
+
+def highScoreMenu(score):
+    #declare input box
+    userInput = InputBox(DISPLAY_WIDTH*0.4, DISPLAY_HEIGHT*0.5, DISPLAY_WIDTH*0.1, DISPLAY_HEIGHT*0.1)
+
+    running = True
+
+    while running:
+        #events
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                exit()
+            elif event.type == pygame.KEYDOWN:
+                 if event.key == pygame.K_ESCAPE: # quit when pressing escape
+                     pygame.quit()
+
+            userName = userInput.handle_event(event)
+    
+            userInput.update()
+
+            if userName != None: #if userInput box was given an input
+                print(userName)
+                DirectoryParser.saveScore(userName, score)
+
+                #send user to high score display
+
+            #background
+            gameDisplay.fill(FOREST_GREEN)
+
+            TextPrinter.displayText("Enter your name", (DISPLAY_WIDTH*0.5, DISPLAY_HEIGHT*0.4), 75, BLACK)
+            
+            score.displayScore()
+
+            userInput.draw(gameDisplay)
             
             pygame.display.update()
 
@@ -229,5 +277,10 @@ def resultMenu(score, displayMessage):
             clock.tick(FPS)
 
 if __name__ == "__main__":
-    mainMenu()
+    startPage = input("Choose start page (main, highscore): ")
+
+    if startPage == "highscore":
+        highScoreMenu(Score())
+    else:
+        mainMenu()
     quit()
