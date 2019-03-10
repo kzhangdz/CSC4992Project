@@ -29,19 +29,28 @@ class DirectoryParser:
         return imageList
 
     @staticmethod
-    def saveScore(userName, score):
-        '''save passed user and score to score.csv'''
-        #FIXME: pass in mode (10, 20 cards). use a different csv for each mode
-
+    def getCSVDirectory(numCards):
         #get current directory
         mainDirectory = os.path.abspath(os.curdir)
 
         #get data directory
         dataDirectory = os.path.join(mainDirectory, "data")
 
-        row = [userName, score.score]
+        csvDirectory = ""
 
-        csvDirectory = os.path.join(dataDirectory, "score10.csv")
+        if numCards == 10:
+            csvDirectory = os.path.join(dataDirectory, "score10.csv")
+
+        return csvDirectory
+
+    @staticmethod
+    def saveScore(userName, score, numCards):
+        '''save passed user and score to score.csv'''
+        #FIXME: pass in mode (10, 20 cards). use a different csv for each mode
+
+        csvDirectory = DirectoryParser.getCSVDirectory(numCards)
+
+        row = [userName, score.score]
 
         #open score.csv
         DirectoryParser.openCSV(csvDirectory, row)
@@ -86,9 +95,29 @@ class DirectoryParser:
             for row in sortedList:
                 writer.writerow(row)
 
+    @staticmethod
+    def getTop10Scores(numCards):
+        csvDirectory = DirectoryParser.getCSVDirectory(numCards)
+
+        with open(csvDirectory, "r") as readFile:
+            reader = csv.reader(readFile)
+            lines = list(reader) #store all csv data in list
+
+            if len(lines) < 10: #if less than 10 scores, add dummy entries
+                numRows = len(lines)
+                for i in range(numRows, 10):
+                    lines.append(["N/A", 0])
+                return lines[:10]
+            else:
+                return lines[:10] #return rows 0 to 9
+            
+
 if __name__ == "__main__":
     print(DirectoryParser.retrieveCardImages("theme1", "back"))
     print(DirectoryParser.retrieveCardImages("theme1", "front"))
+
+    print(DirectoryParser.getTop10Scores(10))
+    
     
     
 

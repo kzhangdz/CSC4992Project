@@ -191,12 +191,12 @@ def gameplayMenu(numCards):
 
             #if all cards face up, send user to results screen
             if currentDeck.checkAllFaceUp():
-                resultMenu(currentScore, "Congratulations!")
+                resultMenu(currentScore, "Congratulations!", numCards)
 
             #set frames per second
             clock.tick(FPS)
 
-def resultMenu(score, displayMessage):
+def resultMenu(score, displayMessage, numCards):
     #buttons
     menuButton = Button((DISPLAY_WIDTH*0.5, DISPLAY_HEIGHT*0.6), (200, 80), RED, "Return to Menu")
     highScoreButton = Button((DISPLAY_WIDTH*0.5, DISPLAY_HEIGHT*0.8), (200, 80), RED, "Go to HighScore")
@@ -218,7 +218,7 @@ def resultMenu(score, displayMessage):
                 mainMenu()
             if highScoreButton.isClicked(event):
                 #call main menu
-                highScoreMenu(score)
+                highScoreMenu(score, numCards)
 
             #background
             gameDisplay.fill(FOREST_GREEN)
@@ -236,9 +236,12 @@ def resultMenu(score, displayMessage):
             #set frames per second
             clock.tick(FPS)
 
-def highScoreMenu(score):
+def highScoreMenu(score, numCards):
     #declare input box
     userInput = InputBox(DISPLAY_WIDTH*0.4, DISPLAY_HEIGHT*0.5, DISPLAY_WIDTH*0.1, DISPLAY_HEIGHT*0.1)
+
+    highScoreDisplayButton = Button((DISPLAY_WIDTH*0.5, DISPLAY_HEIGHT*0.7), (200, 80), RED, "View High Scores")
+    menuButton = Button((DISPLAY_WIDTH*0.5, DISPLAY_HEIGHT*0.9), (200, 80), RED, "Return to Menu")
 
     running = True
 
@@ -258,9 +261,16 @@ def highScoreMenu(score):
 
             if userName != None: #if userInput box was given an input
                 print(userName)
-                DirectoryParser.saveScore(userName, score)
+                DirectoryParser.saveScore(userName, score, numCards)
 
                 #send user to high score display
+                highScoreDisplayMenu(numCards)
+
+            if highScoreDisplayButton.isClicked(event):
+                highScoreDisplayMenu(numCards)
+            if menuButton.isClicked(event):
+                #call main menu
+                mainMenu()
 
             #background
             gameDisplay.fill(FOREST_GREEN)
@@ -269,7 +279,56 @@ def highScoreMenu(score):
             
             score.displayScore()
 
+            highScoreDisplayButton.draw(gameDisplay)
+            menuButton.draw(gameDisplay)
+
             userInput.draw(gameDisplay)
+            
+            pygame.display.update()
+
+            #set frames per second
+            clock.tick(FPS)
+
+def highScoreDisplayMenu(numCards):
+    scoreList = DirectoryParser.getTop10Scores(numCards)
+    menuButton = Button((DISPLAY_WIDTH*0.5, DISPLAY_HEIGHT*0.8), (200, 80), RED, "Return to Menu")
+
+    #positions of text
+    nameXPos = DISPLAY_WIDTH*0.33
+    scoreXPos = DISPLAY_WIDTH*0.66
+    scoreYPos = 0 #will be changed later
+
+    running = True
+
+    while running:
+        #events
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                exit()
+            elif event.type == pygame.KEYDOWN:
+                 if event.key == pygame.K_ESCAPE: # quit when pressing escape
+                     pygame.quit()
+
+            if menuButton.isClicked(event):
+                #call main menu
+                mainMenu()
+                     
+            #background
+            gameDisplay.fill(FOREST_GREEN)
+
+            TextPrinter.displayText("High Scores", (DISPLAY_WIDTH*0.5, DISPLAY_HEIGHT*0.1), 75, BLACK)
+
+            scoreYPos = DISPLAY_HEIGHT * 0.2
+            for row in scoreList:
+                #display name
+                TextPrinter.displayText(str(row[0]), (nameXPos, scoreYPos), 30, BLACK)
+                #display score
+                TextPrinter.displayText(str(row[1]), (scoreXPos, scoreYPos), 30, BLACK)
+                #increase position counter
+                scoreYPos += DISPLAY_HEIGHT * 0.05
+
+            menuButton.draw(gameDisplay)
             
             pygame.display.update()
 
@@ -280,7 +339,7 @@ if __name__ == "__main__":
     startPage = input("Choose start page (main, highscore): ")
 
     if startPage == "highscore":
-        highScoreMenu(Score())
+        highScoreMenu(Score(), 10)
     else:
         mainMenu()
     quit()
