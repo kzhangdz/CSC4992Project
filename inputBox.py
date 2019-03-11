@@ -8,11 +8,13 @@ FONT = pg.font.Font(None, 32)
 class InputBox:
 
     def __init__(self, x, y, w, h, text=''):
-        self.rect = pg.Rect(x, y, w, h)
+        self.rect = pg.Rect((x, y), (w, h))
         self.color = COLOR_INACTIVE
         self.text = text
         self.txt_surface = FONT.render(text, True, self.color)
         self.active = False
+
+        self.rect.center = (x, y)
 
     def handle_event(self, event):
         if event.type == pg.MOUSEBUTTONDOWN:

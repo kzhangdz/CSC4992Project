@@ -199,7 +199,7 @@ def gameplayMenu(numCards):
 def resultMenu(score, displayMessage, numCards):
     #buttons
     menuButton = Button((DISPLAY_WIDTH*0.5, DISPLAY_HEIGHT*0.6), (200, 80), RED, "Return to Menu")
-    highScoreButton = Button((DISPLAY_WIDTH*0.5, DISPLAY_HEIGHT*0.8), (200, 80), RED, "Go to HighScore")
+    highScoreButton = Button((DISPLAY_WIDTH*0.5, DISPLAY_HEIGHT*0.8), (200, 80), RED, "Save Score")
     
     running = True
 
@@ -238,7 +238,7 @@ def resultMenu(score, displayMessage, numCards):
 
 def highScoreMenu(score, numCards):
     #declare input box
-    userInput = InputBox(DISPLAY_WIDTH*0.4, DISPLAY_HEIGHT*0.5, DISPLAY_WIDTH*0.1, DISPLAY_HEIGHT*0.1)
+    userInput = InputBox(DISPLAY_WIDTH*0.425, DISPLAY_HEIGHT*0.55, DISPLAY_WIDTH*0.1, DISPLAY_HEIGHT*0.1)
 
     highScoreDisplayButton = Button((DISPLAY_WIDTH*0.5, DISPLAY_HEIGHT*0.7), (200, 80), RED, "View High Scores")
     menuButton = Button((DISPLAY_WIDTH*0.5, DISPLAY_HEIGHT*0.9), (200, 80), RED, "Return to Menu")
