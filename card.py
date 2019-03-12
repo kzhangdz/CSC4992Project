@@ -1,6 +1,7 @@
 from pygameEnvironment import *
 import os.path
-#from constant import DISPLAY_WIDTH, DISPLAY_HEIGHT
+from constant import DISPLAY_WIDTH, DISPLAY_HEIGHT
+import math
 
 '''may be able to tie the card to a button
 Clicking the button will change the card.'''
@@ -12,8 +13,8 @@ class CardStatus:
     # _unused, back, front, solved = range(4)
 
 class Card:
-    imageDimensions = (87, 115)
-    #imageDimensions = (DISPLAY_WIDTH*0.10875, DISPLAY_HEIGHT*0.2)
+    #imageDimensions = (87, 115)
+    imageDimensions = (math.floor(DISPLAY_WIDTH*0.10875), math.floor(DISPLAY_HEIGHT*0.191666))
 
     def __init__(self, pos, imageDirectories):
         '''inititialize a card'''
