@@ -37,8 +37,10 @@ class CardDeck:
         cardList = []
         if numCards == 10:
             cardList = CardDeck.load10Cards(theme, imageDirectories)
-        elif numCards == 20:
-            pass
+        elif numCards == 14:
+            cardList = CardDeck.load14Cards(theme, imageDirectories)
+        elif numCards == 18:
+            cardList = CardDeck.load18Cards(theme, imageDirectories)
         
         return cardList
 
@@ -62,6 +64,66 @@ class CardDeck:
         #initialize second row
         for i in range(5, 10):
             newCard = Card((xPos, yPosRow2), [imageDirectories[0][0], imageDirectories[1][i], imageDirectories[2][0]])
+            cardList.append(newCard)
+            xPos = xPos + (DISPLAY_WIDTH * 0.15)
+
+        return cardList
+
+    def load14Cards(theme, imageDirectories):
+        #define positions
+        yPosRow1 = DISPLAY_HEIGHT * 0.3 # y position of row 1 of cards
+        yPosRow2 = DISPLAY_HEIGHT * 0.6 # y position of row 2 of cards
+        xPos = DISPLAY_WIDTH * 0.05 #x position of first card in row
+
+        cardList = []
+
+        #initialize first row
+        for i in range(0, 7):
+            newCard = Card((xPos, yPosRow1), [imageDirectories[0][0], imageDirectories[1][i], imageDirectories[2][0]])
+            cardList.append(newCard)
+            xPos = xPos + (DISPLAY_WIDTH * 0.13)
+
+        #reset xPos
+        xPos = DISPLAY_WIDTH * 0.05
+
+        #initialize second row
+        for i in range(7, 14):
+            newCard = Card((xPos, yPosRow2), [imageDirectories[0][0], imageDirectories[1][i], imageDirectories[2][0]])
+            cardList.append(newCard)
+            xPos = xPos + (DISPLAY_WIDTH * 0.13)
+
+        return cardList
+
+    def load18Cards(theme, imageDirectories):
+        #define positions
+        yPosRow1 = DISPLAY_HEIGHT * 0.2 # y position of row 1 of cards
+        yPosRow2 = DISPLAY_HEIGHT * 0.4 # y position of row 2 of cards
+        yPosRow3 = DISPLAY_HEIGHT * 0.6 # y position of row 3 of cards
+        xPos = DISPLAY_WIDTH * 0.07 #x position of first card in row
+
+        cardList = []
+
+        #initialize first row
+        for i in range(0, 6):
+            newCard = Card((xPos, yPosRow1), [imageDirectories[0][0], imageDirectories[1][i], imageDirectories[2][0]])
+            cardList.append(newCard)
+            xPos = xPos + (DISPLAY_WIDTH * 0.15)
+
+        #reset xPos
+        xPos = DISPLAY_WIDTH * 0.07
+
+        #initialize second row
+        for i in range(6, 12):
+            newCard = Card((xPos, yPosRow2), [imageDirectories[0][0], imageDirectories[1][i], imageDirectories[2][0]])
+            cardList.append(newCard)
+            xPos = xPos + (DISPLAY_WIDTH * 0.15)
+
+        #reset xPos
+        xPos = DISPLAY_WIDTH * 0.07
+
+        #initialize second row
+        for i in range(12, 18):
+            newCard = Card((xPos, yPosRow3), [imageDirectories[0][0], imageDirectories[1][i], imageDirectories[2][0]])
             cardList.append(newCard)
             xPos = xPos + (DISPLAY_WIDTH * 0.15)
 

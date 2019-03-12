@@ -61,7 +61,9 @@ def mainMenu():
 def singlePlayerMenu():
     #buttons
     backButton = Button((DISPLAY_WIDTH*0.1, DISPLAY_HEIGHT*0.1), (80, 40), RED, "Back")
-    gameplayButton = Button((DISPLAY_WIDTH*0.5, DISPLAY_HEIGHT*0.5), (80, 40), RED, "Start w/ 10 cards")    
+    gameplay10Button = Button((DISPLAY_WIDTH*0.5, DISPLAY_HEIGHT*0.5), (200, 40), RED, "Start w/ 10 cards")
+    gameplay14Button = Button((DISPLAY_WIDTH*0.5, DISPLAY_HEIGHT*0.65), (200, 40), RED, "Start w/ 14 cards")
+    gameplay18Button = Button((DISPLAY_WIDTH*0.5, DISPLAY_HEIGHT*0.8), (200, 40), RED, "Start w/ 18 cards")
 
     #game loop
     running = True
@@ -79,14 +81,19 @@ def singlePlayerMenu():
             if backButton.isClicked(event):
                 #call main menu
                 mainMenu()
-            if gameplayButton.isClicked(event):
-                #call main menu
+            if gameplay10Button.isClicked(event):
                 gameplayMenu(10)
+            if gameplay14Button.isClicked(event):
+                gameplayMenu(14)
+            if gameplay18Button.isClicked(event):
+                gameplayMenu(18)
 
             gameDisplay.fill(FOREST_GREEN)
             backButton.draw(gameDisplay)
 
-            gameplayButton.draw(gameDisplay)
+            gameplay10Button.draw(gameDisplay)
+            gameplay14Button.draw(gameDisplay)
+            gameplay18Button.draw(gameDisplay)
             
             TextPrinter.displayText("Single Player", (DISPLAY_WIDTH*0.50, DISPLAY_HEIGHT*0.3), 75, BLACK)
             pygame.display.update()
@@ -146,6 +153,7 @@ def gameplayMenu(numCards):
     backButton = Button((DISPLAY_WIDTH*0.1, DISPLAY_HEIGHT*0.1), (80, 40), RED, "Back")
 
     #declare card deck
+    #FIXME: refactor use different themes
     currentDeck = CardDeck("theme1", numCards)
 
     #declare score
@@ -198,8 +206,8 @@ def gameplayMenu(numCards):
 
 def resultMenu(score, displayMessage, numCards):
     #buttons
-    menuButton = Button((DISPLAY_WIDTH*0.5, DISPLAY_HEIGHT*0.6), (200, 80), RED, "Return to Menu")
-    highScoreButton = Button((DISPLAY_WIDTH*0.5, DISPLAY_HEIGHT*0.8), (200, 80), RED, "Save Score")
+    highScoreButton = Button((DISPLAY_WIDTH*0.5, DISPLAY_HEIGHT*0.6), (200, 80), RED, "Save Score")
+    menuButton = Button((DISPLAY_WIDTH*0.5, DISPLAY_HEIGHT*0.8), (200, 80), RED, "Return to Menu")
     
     running = True
 
@@ -292,11 +300,12 @@ def highScoreMenu(score, numCards):
 def highScoreDisplayMenu(numCards):
     scoreList = DirectoryParser.getTop10Scores(numCards)
     menuButton = Button((DISPLAY_WIDTH*0.5, DISPLAY_HEIGHT*0.8), (200, 80), RED, "Return to Menu")
+    highScoreLabel = "High Scores (" + str(numCards) + " Cards)"
 
     #positions of text
     nameXPos = DISPLAY_WIDTH*0.33
     scoreXPos = DISPLAY_WIDTH*0.66
-    scoreYPos = 0 #will be changed later
+    scoreYPos = 0 #will be modified later in code
 
     running = True
 
@@ -317,7 +326,7 @@ def highScoreDisplayMenu(numCards):
             #background
             gameDisplay.fill(FOREST_GREEN)
 
-            TextPrinter.displayText("High Scores", (DISPLAY_WIDTH*0.5, DISPLAY_HEIGHT*0.1), 75, BLACK)
+            TextPrinter.displayText(highScoreLabel, (DISPLAY_WIDTH*0.5, DISPLAY_HEIGHT*0.1), 65, BLACK)
 
             scoreYPos = DISPLAY_HEIGHT * 0.2
             for row in scoreList:

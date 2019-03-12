@@ -40,6 +40,10 @@ class DirectoryParser:
 
         if numCards == 10:
             csvDirectory = os.path.join(dataDirectory, "score10.csv")
+        elif numCards == 14:
+            csvDirectory = os.path.join(dataDirectory, "score14.csv")
+        elif numCards == 18:
+            csvDirectory = os.path.join(dataDirectory, "score18.csv")
 
         return csvDirectory
 
