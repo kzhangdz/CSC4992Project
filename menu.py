@@ -303,6 +303,8 @@ def highScoreDisplayMenu(numCards):
     menuButton = Button((DISPLAY_WIDTH*0.5, DISPLAY_HEIGHT*0.8), (200, 80), RED, "Return to Menu")
     highScoreLabel = "High Scores (" + str(numCards) + " Cards)"
 
+    recursionButton = Button((DISPLAY_WIDTH*0.8, DISPLAY_HEIGHT*0.9), (200, 80), RED, "Test Recursion")
+
     #positions of text
     nameXPos = DISPLAY_WIDTH*0.33
     scoreXPos = DISPLAY_WIDTH*0.66
@@ -323,6 +325,9 @@ def highScoreDisplayMenu(numCards):
             if menuButton.isClicked(event):
                 #call main menu
                 mainMenu()
+            if recursionButton.isClicked(event):
+                #call main menu
+                testRecursion(scoreList)
                      
             #background
             gameDisplay.fill(FOREST_GREEN)
@@ -339,11 +344,40 @@ def highScoreDisplayMenu(numCards):
                 scoreYPos += DISPLAY_HEIGHT * 0.05
 
             menuButton.draw(gameDisplay)
+            recursionButton.draw(gameDisplay)
             
             pygame.display.update()
 
             #set frames per second
             clock.tick(FPS)
+
+def testRecursion(scoreList):
+    def Sort(sub_li): 
+        sub_li.sort(key = lambda x: x[0]) 
+        return sub_li 
+
+    sortedScores = Sort(scoreList)
+    print(sortedScores)
+
+    userKey = input("Enter a name to get its index: ")
+    def binarySearchNestedList(arr, left, right, val):
+        if right >= left:
+            mid = (left + (right - 1))//2
+            if arr[mid][0] == val:
+                return mid
+            elif arr[mid][0] > val:
+                return binarySearchNestedList(arr, left, mid-1, val)
+            elif arr[mid][0] < val:
+                return binarySearchNestedList(arr, mid+1, right, val)
+        else:
+            return -1 #not found
+
+    left = 0
+    right = len(sortedScores) - 1
+    resultingIndex = binarySearchNestedList(sortedScores, left, right, userKey)
+
+    print("Index of {} is {}".format(userKey, resultingIndex))
+    
 
 if __name__ == "__main__":
     startPage = input("Choose start page (main, highscore): ")
