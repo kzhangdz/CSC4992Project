@@ -31,9 +31,27 @@ class Button:
             if event.button == 1:
                 return self.rect.collidepoint(event.pos)
 
-class ImageButton:
-    '''works with png, but not gif'''
-    
+class ImageButton(Button):
+    def __init__(self, position, imageDirectory):
+        imageFile = pygame.image.load(imageDirectory)
+
+        #tie pygame.Surface to pygame.image
+        #get image size
+        size = imageFile.get_rect().size
+
+        #make surface and rect the same size as image
+        self.image = pygame.Surface(size, pygame.SRCALPHA, 32) #SRCALPHA and 32 set transparent surface
+        self.rect = pygame.Rect((0,0), size)
+
+        imageRect = imageFile.get_rect()
+        imageRect.center = self.rect.center
+
+        self.image.blit(imageFile, imageRect)
+
+        # set after centering text
+        self.rect.center = position
+            
+'''class ImageButton:
     def __init__(self, position, imageDirectory):
         imageFile = pygame.image.load(imageDirectory)
 
@@ -59,7 +77,7 @@ class ImageButton:
     def isClicked(self, event):
         if event.type == pygame.MOUSEBUTTONDOWN:
             if event.button == 1:
-                return self.rect.collidepoint(event.pos)
+                return self.rect.collidepoint(event.pos)'''
 
 if __name__ == "__main__":
     #imgDirectory = os.path.join(os.path.abspath(os.curdir), 'images', 'menu', 'back_button.png')
