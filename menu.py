@@ -268,11 +268,17 @@ def highScoreMenu(score, numCards):
             userInput.update()
 
             if userName != None: #if userInput box was given an input
-                print(userName)
-                DirectoryParser.saveScore(userName, score, numCards)
+                print(len(userName))
+                try:
+                    if len(userName) > 10:
+                        raise ValueError('Data should not exceed 10 characters. Length was {}'.format(len(userName)))
+                    print(userName)
+                    DirectoryParser.saveScore(userName, score, numCards)
 
-                #send user to high score display
-                highScoreDisplayMenu(numCards)
+                    #send user to high score display
+                    highScoreDisplayMenu(numCards)
+                except ValueError as err:
+                    print("Did not save user. Character length exceeded.")
 
             if highScoreDisplayButton.isClicked(event):
                 highScoreDisplayMenu(numCards)
@@ -283,7 +289,8 @@ def highScoreMenu(score, numCards):
             #background
             gameDisplay.fill(FOREST_GREEN)
 
-            TextPrinter.displayText("Enter your name", (DISPLAY_WIDTH*0.5, DISPLAY_HEIGHT*0.4), 75, BLACK)
+            TextPrinter.displayText("Enter your name", (DISPLAY_WIDTH*0.5, DISPLAY_HEIGHT*0.3), 75, BLACK)
+            TextPrinter.displayText("Limit: 10 characters", (DISPLAY_WIDTH*0.5, DISPLAY_HEIGHT*0.4), 25, BLACK)
             
             score.displayScore()
 
