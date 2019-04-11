@@ -361,13 +361,15 @@ def testRecursion(scoreList):
     userKey = input("Enter a name to get its index: ")
     def binarySearchNestedList(arr, left, right, val):
         if right >= left:
-            mid = (left + (right - 1))//2
+            mid = (left + right)//2
             if arr[mid][0] == val:
                 return mid
             elif arr[mid][0] > val:
                 return binarySearchNestedList(arr, left, mid-1, val)
             elif arr[mid][0] < val:
                 return binarySearchNestedList(arr, mid+1, right, val)
+            else:
+                return -1
         else:
             return -1 #not found
 
