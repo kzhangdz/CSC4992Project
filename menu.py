@@ -147,7 +147,6 @@ def gameplayMenu(numCards):
     backButton = Button((DISPLAY_WIDTH*0.1, DISPLAY_HEIGHT*0.1), (80, 40), RED, "Back")
 
     #declare card deck
-    #FIXME: refactor use different themes
     currentDeck = CardDeck("theme1", numCards)
 
     #declare score
@@ -267,7 +266,7 @@ def highScoreMenu(score, numCards):
                     if len(userName) > 10:
                         raise ValueError('Data should not exceed 10 characters. Length was {}'.format(len(userName)))
                     print(userName)
-                    DirectoryParser.saveScore(userName, score, numCards)
+                    saveScore(userName, score, numCards)
 
                     #send user to high score display
                     highScoreDisplayMenu(numCards)
@@ -299,7 +298,7 @@ def highScoreMenu(score, numCards):
             clock.tick(FPS)
 
 def highScoreDisplayMenu(numCards):
-    scoreList = DirectoryParser.getTop10Scores(numCards)
+    scoreList = getTop10Scores(numCards)
     menuButton = Button((DISPLAY_WIDTH*0.5, DISPLAY_HEIGHT*0.8), (200, 80), RED, "Return to Menu")
     highScoreLabel = "High Scores (" + str(numCards) + " Cards)"
 

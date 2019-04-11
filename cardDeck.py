@@ -1,5 +1,5 @@
 from card import *
-from directoryParser import DirectoryParser
+from directoryParser import *
 import random
 from pygameEnvironment import *
 from constant import *
@@ -13,9 +13,9 @@ class CardDeck:
     def loadCards(theme, numCards):
         '''returns a list of cards'''
         #get image directories
-        backDirectory = DirectoryParser.retrieveCardImages(theme, "back")
-        frontDirectories = DirectoryParser.retrieveCardImages(theme, "front")
-        solvedDirectory = DirectoryParser.retrieveCardImages(theme, "solved")
+        backDirectory = retrieveCardImages(theme, "back")
+        frontDirectories = retrieveCardImages(theme, "front")
+        solvedDirectory = retrieveCardImages(theme, "solved")
 
         #randomize front card image directories
         random.shuffle(frontDirectories)
