@@ -55,9 +55,9 @@ def mainMenu():
 def singlePlayerMenu():
     #buttons
     backButton = Button((DISPLAY_WIDTH*0.1, DISPLAY_HEIGHT*0.1), (80, 40), RED, "Back")
-    gameplay10Button = Button((DISPLAY_WIDTH*0.5, DISPLAY_HEIGHT*0.5), (200, 40), RED, "Start w/ 10 cards")
-    gameplay14Button = Button((DISPLAY_WIDTH*0.5, DISPLAY_HEIGHT*0.65), (200, 40), RED, "Start w/ 14 cards")
-    gameplay18Button = Button((DISPLAY_WIDTH*0.5, DISPLAY_HEIGHT*0.8), (200, 40), RED, "Start w/ 18 cards")
+    gameplay10Button = Button((DISPLAY_WIDTH*0.5, DISPLAY_HEIGHT*0.5), (200, 40), RED, "Easy (10 cards)")
+    gameplay14Button = Button((DISPLAY_WIDTH*0.5, DISPLAY_HEIGHT*0.65), (200, 40), RED, "Medium (14 cards)")
+    gameplay18Button = Button((DISPLAY_WIDTH*0.5, DISPLAY_HEIGHT*0.8), (200, 40), RED, "Hard (18 cards)")
 
     #game loop
     running = True
@@ -302,7 +302,7 @@ def highScoreDisplayMenu(numCards):
     menuButton = Button((DISPLAY_WIDTH*0.5, DISPLAY_HEIGHT*0.8), (200, 80), RED, "Return to Menu")
     highScoreLabel = "High Scores (" + str(numCards) + " Cards)"
 
-    recursionButton = Button((DISPLAY_WIDTH*0.8, DISPLAY_HEIGHT*0.9), (200, 80), RED, "Test Recursion")
+    recursionButton = Button((DISPLAY_WIDTH*0.2, DISPLAY_HEIGHT*0.9), (200, 80), RED, "Test Recursion")
 
     #positions of text
     nameXPos = DISPLAY_WIDTH*0.33
