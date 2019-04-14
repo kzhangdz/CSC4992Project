@@ -18,9 +18,11 @@ import copy
 def mainMenu():
     singleImgDirectory = os.path.join(os.path.abspath(os.curdir), 'images', 'menu', 'button_single-player.png')
     multiImgDirectory = os.path.join(os.path.abspath(os.curdir), 'images', 'menu', 'button_two-player.png')
+    imgDirectoryOptions = os.path.join(os.path.abspath(os.curdir), 'images', 'menu', 'hamburger.png')
 
     singlePlayerButton = ImageButton((DISPLAY_WIDTH*0.33, DISPLAY_HEIGHT*0.5), singleImgDirectory)
     multiPlayerButton = ImageButton((DISPLAY_WIDTH*0.66, DISPLAY_HEIGHT*0.5), multiImgDirectory)
+    optionsButton = ImageButton((DISPLAY_WIDTH * 0.9, DISPLAY_HEIGHT * 0.9), imgDirectoryOptions)
 
     #game loop
     running = True
@@ -41,11 +43,14 @@ def mainMenu():
             if multiPlayerButton.isClicked(event):
                 #call multi player menu
                 multiPlayerMenu()
+            if optionsButton.isClicked(event):
+                optionMenu('main')
 
         gameDisplay.fill(FOREST_GREEN)
         singlePlayerButton.draw(gameDisplay)
         multiPlayerButton.draw(gameDisplay)
         TextPrinter.displayTitle("Memory Game")
+        optionsButton.draw(gameDisplay)
          
         pygame.display.update()
 
@@ -55,6 +60,9 @@ def mainMenu():
 def singlePlayerMenu():
     #buttons
     backButton = Button((DISPLAY_WIDTH*0.1, DISPLAY_HEIGHT*0.1), (80, 40), RED, "Back")
+    imgDirectoryOptions = os.path.join(os.path.abspath(os.curdir), 'images', 'menu', 'hamburger.png')
+    optionsButton = ImageButton((DISPLAY_WIDTH * 0.9, DISPLAY_HEIGHT * 0.9), imgDirectoryOptions)
+    
     gameplay10Button = Button((DISPLAY_WIDTH*0.5, DISPLAY_HEIGHT*0.5), (200, 40), RED, "Easy (10 cards)")
     gameplay14Button = Button((DISPLAY_WIDTH*0.5, DISPLAY_HEIGHT*0.65), (200, 40), RED, "Medium (14 cards)")
     gameplay18Button = Button((DISPLAY_WIDTH*0.5, DISPLAY_HEIGHT*0.8), (200, 40), RED, "Hard (18 cards)")
@@ -81,9 +89,12 @@ def singlePlayerMenu():
                 gameplayMenu(14)
             if gameplay18Button.isClicked(event):
                 gameplayMenu(18)
+            if optionsButton.isClicked(event):
+                optionMenu('single')
 
             gameDisplay.fill(FOREST_GREEN)
             backButton.draw(gameDisplay)
+            optionsButton.draw(gameDisplay)
 
             gameplay10Button.draw(gameDisplay)
             gameplay14Button.draw(gameDisplay)
@@ -98,6 +109,8 @@ def singlePlayerMenu():
 def multiPlayerMenu():
     #buttons
     backButton = Button((DISPLAY_WIDTH*0.1, DISPLAY_HEIGHT*0.1), (80, 40), RED, "Back")
+    imgDirectoryOptions = os.path.join(os.path.abspath(os.curdir), 'images', 'menu', 'hamburger.png')
+    optionsButton = ImageButton((DISPLAY_WIDTH * 0.9, DISPLAY_HEIGHT * 0.9), imgDirectoryOptions)
 
     #test checkbox
     musicCheckbox = Checkbox((DISPLAY_WIDTH*0.5, DISPLAY_HEIGHT*0.5))
@@ -127,10 +140,13 @@ def multiPlayerMenu():
                     musicCheckbox = Checkbox((DISPLAY_WIDTH*0.5, DISPLAY_HEIGHT*0.5), trueImageDirectory)
                 elif musicCheckbox.state == False:
                     musicCheckbox = Checkbox((DISPLAY_WIDTH*0.5, DISPLAY_HEIGHT*0.5))
+            if optionsButton.isClicked(event):
+                optionMenu('multi')
 
             gameDisplay.fill(FOREST_GREEN)
             backButton.draw(gameDisplay)
             TextPrinter.displayText("Multi Player", (DISPLAY_WIDTH*0.50, DISPLAY_HEIGHT*0.3), 75, BLACK)
+            optionsButton.draw(gameDisplay)
 
             #test checkbox
             musicCheckbox.draw(gameDisplay)
@@ -143,8 +159,10 @@ def gameplayMenu(numCards):
     #needs to pass in parameters that define game state
     #alternatively, options menu should open in a new frame above the current one
 
-    #declare button
-    backButton = Button((DISPLAY_WIDTH*0.1, DISPLAY_HEIGHT*0.1), (80, 40), RED, "Back")
+    #declare button (SB: eliminated back button. Can only cancel gameplay from options menu)
+    #backButton = Button((DISPLAY_WIDTH*0.1, DISPLAY_HEIGHT*0.1), (80, 40), RED, "Back")
+    imgDirectoryOptions = os.path.join(os.path.abspath(os.curdir), 'images', 'menu', 'hamburger.png')
+    optionsButton = ImageButton((DISPLAY_WIDTH * 0.9, DISPLAY_HEIGHT * 0.9), imgDirectoryOptions)
 
     #declare card deck
     currentDeck = CardDeck("theme1", numCards)
@@ -165,9 +183,11 @@ def gameplayMenu(numCards):
                  if event.key == pygame.K_ESCAPE: # quit when pressing escape
                      pygame.quit()   
 
-            if backButton.isClicked(event):
+            '''if backButton.isClicked(event):
                 #call main menu
-                singlePlayerMenu()
+                singlePlayerMenu()'''
+            if optionsButton.isClicked(event):
+                optionMenu('gameplay')
 
             #switch card state if clicked
             for card in currentDeck.deck:
@@ -177,7 +197,8 @@ def gameplayMenu(numCards):
 
             #background
             gameDisplay.fill(FOREST_GREEN)
-            backButton.draw(gameDisplay)
+            #backButton.draw(gameDisplay)
+            optionsButton.draw(gameDisplay)
             currentScore.displayScore()
             currentScore.displayMultiplier()
 
@@ -380,11 +401,103 @@ def testRecursion(scoreList):
     print("Index of {} is {}".format(userKey, resultingIndex))
     
 
+# option menu can only be called from four pages (the previous_page): 'main', 'single', 'multi', 'gameplay'
+def optionMenu(previous_page):
+	
+	# positions (maybe move to constant.py)
+	top_left = (DISPLAY_WIDTH * 0.05, DISPLAY_HEIGHT * 0.07)	# back button position
+	
+	
+	# button images
+	imgDirectoryBack = os.path.join(os.path.abspath(os.curdir), 'images', 'menu', 'back_button3.png')
+	imgDirectoryCredits = os.path.join(os.path.abspath(os.curdir), 'images', 'menu', 'button_credits.png')
+	imgDirectoryInstructions = os.path.join(os.path.abspath(os.curdir), 'images', 'menu', 'instructions.png')
+	imgDirectoryStatistics = os.path.join(os.path.abspath(os.curdir), 'images', 'menu', 'stats.png')
+	
+	# declared buttons
+	backButton = ImageButton(top_left, imgDirectoryBack)
+	creditsButton = ImageButton((DISPLAY_WIDTH * 0.5, DISPLAY_HEIGHT * 0.6), imgDirectoryCredits)
+	instructionsButton = ImageButton((DISPLAY_WIDTH * 0.5, DISPLAY_HEIGHT * 0.7), imgDirectoryInstructions)
+	statiscticsButton = ImageButton((DISPLAY_WIDTH * 0.5, DISPLAY_HEIGHT * 0.8), imgDirectoryStatistics)
+	
+	# slider bar (placeholder)
+	imgDirectorySlider = os.path.join(os.path.abspath(os.curdir), 'images', 'menu', 'slider_bar.png')
+	slider = ImageButton((DISPLAY_WIDTH * 0.5, DISPLAY_HEIGHT * 0.5), imgDirectorySlider)
+	
+	
+	# cancel gameplay, button position
+	bottom_right = (DISPLAY_WIDTH * 0.9, DISPLAY_HEIGHT * 0.9)
+	imgDirectoryClose = os.path.join(os.path.abspath(os.curdir), 'images', 'menu', 'button_x.png')	# 'cancel_game.png'
+	closeButton = ImageButton(bottom_right, imgDirectoryClose)
+	
+	
+	
+	running = True		# keeps page open
+	
+	while running:
+		
+		# display info
+		gameDisplay.fill(FOREST_GREEN)
+		TextPrinter.displayTitle("Bela Memoro")
+		
+		backButton.draw(gameDisplay)
+		creditsButton.draw(gameDisplay)
+		instructionsButton.draw(gameDisplay)
+		statiscticsButton.draw(gameDisplay)
+		slider.draw(gameDisplay)
+		
+		if previous_page == 'gameplay':
+			closeButton.draw(gameDisplay)
+		
+		for event in pygame.event.get():
+			
+			# pressing exit or escape
+			if event.type == pygame.QUIT:
+				pygame.quit()
+				exit()
+			elif event.type == pygame.KEYDOWN:
+				if event.key == pygame.K_ESCAPE:
+					pygame.quit()
+			
+			# button presses (back, credits page, close gameplay, stats, instructions)
+			if backButton.isClicked(event):
+				if previous_page == 'gameplay':
+					return
+				elif previous_page == 'main':
+					mainMenu()
+				elif previous_page == 'single':
+					singlePlayerMenu()
+				elif previous_page == 'multi':
+					multiPlayerMenu()
+			if closeButton.isClicked(event):
+				mainMenu()
+
+
+			'''	correct these page name OR create these pages
+			if creditsButton.isClicked(event):
+				creditsPage()
+			
+			if instructionsButton.isClicked(event):
+				instructionsPage()
+			
+			if statisticsButton.isClicked(event):
+				statsPage()
+			'''
+			
+			# volume slider bar
+			
+		
+		pygame.display.update()
+		clock.tick(FPS)
+
+
 if __name__ == "__main__":
     startPage = input("Choose start page (main, highscore): ")
 
     if startPage == "highscore":
         highScoreMenu(Score(), 10)
+    elif startPage == "options":
+        optionMenu('single')
     else:
         mainMenu()
     quit()
