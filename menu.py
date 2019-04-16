@@ -354,11 +354,15 @@ def highScoreMenu(score, numCards):
             userInput.update()
 
             if userName != None: #if userInput box was given an input
-                print(userName)
-                saveScore(userName, score, numCards)
+                try:
+                    if len(userName) > 10:
+                        raise ValueError('Data should not exceed 10 characters. Length was ()'.format(len(userName)))
+                    print(userName)
+                    saveScore(userName, score, numCards)
 
-                #send user to high score display
-                highScoreDisplayMenu(numCards)
+                    highScoreDisplayMenu(numCards)
+                except ValueError as err:
+                    print('Did not save user. Character length exceeded.')
 
             if highScoreDisplayButton.isClicked(event):
                 highScoreDisplayMenu(numCards)
