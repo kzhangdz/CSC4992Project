@@ -1,14 +1,11 @@
 '''file that stores all menu pages'''
 
-import pygame
+
 from pygameEnvironment import *
 from constant import *
-from button import Button
-from button import ImageButton
 from card import *
 from cardDeck import *
 from checkbox import *
-from directoryParser import *
 from inputBox import *
 from score import *
 from textPrinter import TextPrinter
@@ -18,11 +15,10 @@ import copy
 def mainMenu():
     singleImgDirectory = os.path.join(os.path.abspath(os.curdir), 'images', 'menu', 'button_single-player.png')
     multiImgDirectory = os.path.join(os.path.abspath(os.curdir), 'images', 'menu', 'button_two-player.png')
-    imgDirectoryOptions = os.path.join(os.path.abspath(os.curdir), 'images', 'menu', 'hamburger.png')
 
     singlePlayerButton = ImageButton((DISPLAY_WIDTH*0.33, DISPLAY_HEIGHT*0.5), singleImgDirectory)
     multiPlayerButton = ImageButton((DISPLAY_WIDTH*0.66, DISPLAY_HEIGHT*0.5), multiImgDirectory)
-    optionsButton = ImageButton((DISPLAY_WIDTH * 0.9, DISPLAY_HEIGHT * 0.9), imgDirectoryOptions)
+    
 
     #game loop
     running = True
@@ -49,7 +45,8 @@ def mainMenu():
         gameDisplay.fill(FOREST_GREEN)
         singlePlayerButton.draw(gameDisplay)
         multiPlayerButton.draw(gameDisplay)
-        TextPrinter.displayTitle("Memory Game")
+        TextPrinter.displayTitle("Bela Memoro") # TextPrinter.displayText("Bela Memoro", (DISPLAY_WIDTH*0.15, DISPLAY_HEIGHT*0.09), 30, BLACK)
+        TextPrinter.displayText("A Memory Game", (DISPLAY_WIDTH*0.5, DISPLAY_HEIGHT*0.3), 30, BLACK)
         optionsButton.draw(gameDisplay)
          
         pygame.display.update()
@@ -59,9 +56,7 @@ def mainMenu():
 
 def singlePlayerMenu():
     #buttons
-    backButton = Button((DISPLAY_WIDTH*0.1, DISPLAY_HEIGHT*0.1), (80, 40), RED, "Back")
-    imgDirectoryOptions = os.path.join(os.path.abspath(os.curdir), 'images', 'menu', 'hamburger.png')
-    optionsButton = ImageButton((DISPLAY_WIDTH * 0.9, DISPLAY_HEIGHT * 0.9), imgDirectoryOptions)
+    #backButton = Button((DISPLAY_WIDTH*0.1, DISPLAY_HEIGHT*0.1), (80, 40), RED, "Back")
     
     gameplay10Button = Button((DISPLAY_WIDTH*0.5, DISPLAY_HEIGHT*0.5), (200, 40), RED, "Easy (10 cards)")
     gameplay14Button = Button((DISPLAY_WIDTH*0.5, DISPLAY_HEIGHT*0.65), (200, 40), RED, "Medium (14 cards)")
@@ -101,6 +96,7 @@ def singlePlayerMenu():
             gameplay18Button.draw(gameDisplay)
             
             TextPrinter.displayText("Single Player", (DISPLAY_WIDTH*0.50, DISPLAY_HEIGHT*0.3), 75, BLACK)
+            TextPrinter.displayText("Bela Memoro", (DISPLAY_WIDTH*0.85, DISPLAY_HEIGHT*0.09), 30, BLACK)
             pygame.display.update()
 
             #set frames per second
@@ -108,9 +104,7 @@ def singlePlayerMenu():
 
 def multiPlayerMenu():
     #buttons
-    backButton = Button((DISPLAY_WIDTH*0.1, DISPLAY_HEIGHT*0.1), (80, 40), RED, "Back")
-    imgDirectoryOptions = os.path.join(os.path.abspath(os.curdir), 'images', 'menu', 'hamburger.png')
-    optionsButton = ImageButton((DISPLAY_WIDTH * 0.9, DISPLAY_HEIGHT * 0.9), imgDirectoryOptions)
+    #backButton = Button((DISPLAY_WIDTH*0.1, DISPLAY_HEIGHT*0.1), (80, 40), RED, "Back")
 
     #test checkbox
     musicCheckbox = Checkbox((DISPLAY_WIDTH*0.5, DISPLAY_HEIGHT*0.5))
@@ -146,6 +140,7 @@ def multiPlayerMenu():
             gameDisplay.fill(FOREST_GREEN)
             backButton.draw(gameDisplay)
             TextPrinter.displayText("Multi Player", (DISPLAY_WIDTH*0.50, DISPLAY_HEIGHT*0.3), 75, BLACK)
+            TextPrinter.displayText("Bela Memoro", (DISPLAY_WIDTH*0.85, DISPLAY_HEIGHT*0.09), 30, BLACK)
             optionsButton.draw(gameDisplay)
 
             #test checkbox
@@ -161,8 +156,6 @@ def gameplayMenu(numCards):
 
     #declare button (SB: eliminated back button. Can only cancel gameplay from options menu)
     #backButton = Button((DISPLAY_WIDTH*0.1, DISPLAY_HEIGHT*0.1), (80, 40), RED, "Back")
-    imgDirectoryOptions = os.path.join(os.path.abspath(os.curdir), 'images', 'menu', 'hamburger.png')
-    optionsButton = ImageButton((DISPLAY_WIDTH * 0.9, DISPLAY_HEIGHT * 0.9), imgDirectoryOptions)
 
     #declare card deck
     currentDeck = CardDeck("theme1", numCards)
@@ -201,6 +194,7 @@ def gameplayMenu(numCards):
             optionsButton.draw(gameDisplay)
             currentScore.displayScore()
             currentScore.displayMultiplier()
+            TextPrinter.displayText("Bela Memoro", (DISPLAY_WIDTH*0.15, DISPLAY_HEIGHT*0.09), 30, BLACK)
 
             #show cards
             for card in currentDeck.deck:
@@ -404,29 +398,29 @@ def testRecursion(scoreList):
 # option menu can only be called from four pages (the previous_page): 'main', 'single', 'multi', 'gameplay'
 def optionMenu(previous_page):
 	
-	# positions (maybe move to constant.py)
-	top_left = (DISPLAY_WIDTH * 0.05, DISPLAY_HEIGHT * 0.07)	# back button position
-	
-	
 	# button images
-	imgDirectoryBack = os.path.join(os.path.abspath(os.curdir), 'images', 'menu', 'back_button3.png')
 	imgDirectoryCredits = os.path.join(os.path.abspath(os.curdir), 'images', 'menu', 'button_credits.png')
 	imgDirectoryInstructions = os.path.join(os.path.abspath(os.curdir), 'images', 'menu', 'instructions.png')
 	imgDirectoryStatistics = os.path.join(os.path.abspath(os.curdir), 'images', 'menu', 'stats.png')
+    
+    # scaled images
+	instruction_icon = pygame.image.load(imgDirectoryInstructions)
+	instruction_icon = pygame.transform.scale(instruction_icon, (math.floor(DISPLAY_WIDTH * 0.35), math.floor(DISPLAY_HEIGHT * 0.3)))
+	stat_icon = pygame.image.load(imgDirectoryStatistics)
+	stat_icon = pygame.transform.scale(stat_icon, (math.floor(DISPLAY_WIDTH * 0.1), math.floor(DISPLAY_HEIGHT * 0.15)))
+
 	
 	# declared buttons
-	backButton = ImageButton(top_left, imgDirectoryBack)
-	creditsButton = ImageButton((DISPLAY_WIDTH * 0.5, DISPLAY_HEIGHT * 0.6), imgDirectoryCredits)
-	instructionsButton = ImageButton((DISPLAY_WIDTH * 0.5, DISPLAY_HEIGHT * 0.7), imgDirectoryInstructions)
-	statiscticsButton = ImageButton((DISPLAY_WIDTH * 0.5, DISPLAY_HEIGHT * 0.8), imgDirectoryStatistics)
+	creditsButton = ImageButton((DISPLAY_WIDTH * 0.5, DISPLAY_HEIGHT * 0.65), imgDirectoryCredits)
+	instructionsButton = ImageButton((DISPLAY_WIDTH * 0.5, DISPLAY_HEIGHT * 0.5), imageFile = instruction_icon)
+	statiscticsButton = ImageButton((DISPLAY_WIDTH * 0.09, DISPLAY_HEIGHT * 0.9), imageFile = stat_icon)
 	
 	# slider bar (placeholder)
-	imgDirectorySlider = os.path.join(os.path.abspath(os.curdir), 'images', 'menu', 'slider_bar.png')
-	slider = ImageButton((DISPLAY_WIDTH * 0.5, DISPLAY_HEIGHT * 0.5), imgDirectorySlider)
+	'''imgDirectorySlider = os.path.join(os.path.abspath(os.curdir), 'images', 'menu', 'slider_bar.png')
+	slider = ImageButton((DISPLAY_WIDTH * 0.5, DISPLAY_HEIGHT * 0.5), imgDirectorySlider)'''
 	
 	
-	# cancel gameplay, button position
-	bottom_right = (DISPLAY_WIDTH * 0.9, DISPLAY_HEIGHT * 0.9)
+	# cancel gameplay
 	imgDirectoryClose = os.path.join(os.path.abspath(os.curdir), 'images', 'menu', 'button_x.png')	# 'cancel_game.png'
 	closeButton = ImageButton(bottom_right, imgDirectoryClose)
 	
@@ -438,13 +432,15 @@ def optionMenu(previous_page):
 		
 		# display info
 		gameDisplay.fill(FOREST_GREEN)
-		TextPrinter.displayTitle("Bela Memoro")
+		TextPrinter.displayText("Options", (DISPLAY_WIDTH*0.50, DISPLAY_HEIGHT*0.3), 75, BLACK)
+		TextPrinter.displayText("Bela Memoro", (DISPLAY_WIDTH*0.85, DISPLAY_HEIGHT*0.09), 30, BLACK)
+		TextPrinter.displayText("Music", (DISPLAY_WIDTH*0.45, DISPLAY_HEIGHT*0.55), 30, BLACK)
 		
 		backButton.draw(gameDisplay)
 		creditsButton.draw(gameDisplay)
 		instructionsButton.draw(gameDisplay)
 		statiscticsButton.draw(gameDisplay)
-		slider.draw(gameDisplay)
+		#slider.draw(gameDisplay)
 		
 		if previous_page == 'gameplay':
 			closeButton.draw(gameDisplay)

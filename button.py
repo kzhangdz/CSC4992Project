@@ -32,8 +32,9 @@ class Button:
                 return self.rect.collidepoint(event.pos)
 
 class ImageButton(Button):
-    def __init__(self, position, imageDirectory):
-        imageFile = pygame.image.load(imageDirectory)
+    def __init__(self, position, imageDirectory = None, imageFile = None):
+        if imageDirectory is not None:
+            imageFile = pygame.image.load(imageDirectory)
 
         #tie pygame.Surface to pygame.image
         #get image size
