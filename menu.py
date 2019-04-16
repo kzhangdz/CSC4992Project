@@ -18,13 +18,12 @@ pygame.mixer.music.load('Netherplace.mp3')
 
 def mainMenu():
     #buttons
-    singlePlayerButton = Button((DISPLAY_WIDTH*0.33, DISPLAY_HEIGHT*0.5), (200, 80), RED, "Single Player")
-    multiPlayerButton = Button((DISPLAY_WIDTH*0.66, DISPLAY_HEIGHT*0.5), (200, 80), RED, "Multi Player")
+    singleImgDirectory = os.path.join(os.path.abspath(os.curdir), 'images', 'menu', 'button_single-player.png')
+    multiImgDirectory = os.path.join(os.path.abspath(os.curdir), 'images', 'menu', 'button_two-player.png')
 
-    #test button
-    imgDirectory = os.path.join(os.path.abspath(os.curdir), 'images', 'menu', 'button_test.png')
-    testButton = ImageButton((DISPLAY_WIDTH*0.9, DISPLAY_HEIGHT*0.9), imgDirectory)
-
+    singlePlayerButton = ImageButton((DISPLAY_WIDTH*0.33, DISPLAY_HEIGHT*0.5), singleImgDirectory)
+    multiPlayerButton = ImageButton((DISPLAY_WIDTH*0.66, DISPLAY_HEIGHT*0.5), multiImgDirectory)
+    
     #game loop
     running = True
 
@@ -44,16 +43,13 @@ def mainMenu():
             if multiPlayerButton.isClicked(event):
                 #call multi player menu
                 multiPlayerMenu()
-            if testButton.isClicked(event):
-                singlePlayerMenu()
+            
 
         gameDisplay.fill(FOREST_GREEN)
         singlePlayerButton.draw(gameDisplay)
         multiPlayerButton.draw(gameDisplay)
         TextPrinter.displayTitle("Memory Game")
-        #test button
-        testButton.draw(gameDisplay)
-         
+        
         pygame.display.update()
 
         #set frames per second
@@ -167,7 +163,6 @@ def gameplayMenu(numCards):
     backButton = Button((DISPLAY_WIDTH*0.1, DISPLAY_HEIGHT*0.1), (80, 40), RED, "Back")
 
     #declare card deck
-    #FIXME: refactor use different themes
     currentDeck = CardDeck("theme1", numCards)
 
     #declare score
@@ -360,7 +355,7 @@ def highScoreMenu(score, numCards):
 
             if userName != None: #if userInput box was given an input
                 print(userName)
-                DirectoryParser.saveScore(userName, score, numCards)
+                saveScore(userName, score, numCards)
 
                 #send user to high score display
                 highScoreDisplayMenu(numCards)
@@ -389,9 +384,11 @@ def highScoreMenu(score, numCards):
             clock.tick(FPS)
 
 def highScoreDisplayMenu(numCards):
-    scoreList = DirectoryParser.getTop10Scores(numCards)
+    scoreList = getTop10Scores(numCards)
     menuButton = Button((DISPLAY_WIDTH*0.5, DISPLAY_HEIGHT*0.8), (200, 80), RED, "Return to Menu")
     highScoreLabel = "High Scores (" + str(numCards) + " Cards)"
+
+    recursionButton = Button((DISPLAY_WIDTH*0.2, DISPLAY_HEIGHT*0.9), (200, 80), RED, "Test Recursion")
 
     #positions of text
     nameXPos = DISPLAY_WIDTH*0.33
@@ -413,7 +410,10 @@ def highScoreDisplayMenu(numCards):
             if menuButton.isClicked(event):
                 #call main menu
                 mainMenu()
-                     
+            if recursionButton.isClicked(event):
+                #call main menu
+                testRecursion(scoreList)
+                
             #background
             gameDisplay.fill(FOREST_GREEN)
 
@@ -429,11 +429,41 @@ def highScoreDisplayMenu(numCards):
                 scoreYPos += DISPLAY_HEIGHT * 0.05
 
             menuButton.draw(gameDisplay)
+            recursionButton.draw(gameDisplay)
             
             pygame.display.update()
 
             #set frames per second
             clock.tick(FPS)
+            
+def testRecursion(scoreList):
+    def Sort(sub_li): 
+        sub_li.sort(key = lambda x: x[0]) 
+        return sub_li 
+
+    sortedScores = Sort(scoreList)
+    print(sortedScores)
+
+    userKey = input("Enter a name to get its index: ")
+    def binarySearchNestedList(arr, left, right, val):
+        if right >= left:
+            mid = (left + right)//2
+            if arr[mid][0] == val:
+                return mid
+            elif arr[mid][0] > val:
+                return binarySearchNestedList(arr, left, mid-1, val)
+            elif arr[mid][0] < val:
+                return binarySearchNestedList(arr, mid+1, right, val)
+            else:
+                return -1
+        else:
+            return -1 #not found
+
+    left = 0
+    right = len(sortedScores) - 1
+    resultingIndex = binarySearchNestedList(sortedScores, left, right, userKey)
+
+    print("Index of {} is {}".format(userKey, resultingIndex))
 
 if __name__ == "__main__":
     startPage = input("Choose start page (main, highscore): ")

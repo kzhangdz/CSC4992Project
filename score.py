@@ -23,7 +23,7 @@ class Score:
 
     def displayMultiplier(self):
         x = DISPLAY_WIDTH * 0.15
-        y = DISPLAY_HEIGHT * 0.8
+        y = DISPLAY_HEIGHT * 0.9
         TextPrinter.displayText('Multiplier:', (x, y), 30, WHITE)
 
         x = DISPLAY_WIDTH * 0.3
@@ -58,7 +58,7 @@ class MultiplayerScore(Score):
     def displayMultiplier(self):
         #multiplier 1
         x = DISPLAY_WIDTH * 0.13
-        y = DISPLAY_HEIGHT * 0.8
+        y = DISPLAY_HEIGHT * 0.85
         TextPrinter.displayText('Multiplier 1:', (x, y), 30, WHITE)
 
         x = DISPLAY_WIDTH * 0.3
@@ -66,7 +66,7 @@ class MultiplayerScore(Score):
 
         #multiplier 2
         x = DISPLAY_WIDTH * 0.13
-        y = DISPLAY_HEIGHT * 0.9
+        y = DISPLAY_HEIGHT * 0.95
         TextPrinter.displayText('Multiplier 2:', (x, y), 30, WHITE)
 
         x = DISPLAY_WIDTH * 0.3
@@ -83,7 +83,7 @@ class MultiplayerScore(Score):
     def displayScore(self):
         #score 1
         x = DISPLAY_WIDTH * 0.73
-        y = DISPLAY_HEIGHT * 0.1
+        y = DISPLAY_HEIGHT * 0.05
         TextPrinter.displayText('Score 1:', (x, y), 30, WHITE)
 
         x = DISPLAY_WIDTH * 0.85
@@ -91,7 +91,7 @@ class MultiplayerScore(Score):
 
         #score 2
         x = DISPLAY_WIDTH * 0.73
-        y = DISPLAY_HEIGHT * 0.2
+        y = DISPLAY_HEIGHT * 0.15
         TextPrinter.displayText('Score 2:', (x, y), 30, WHITE)
 
         x = DISPLAY_WIDTH * 0.85
