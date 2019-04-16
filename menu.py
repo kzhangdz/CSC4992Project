@@ -14,6 +14,7 @@ from score import *
 from textPrinter import TextPrinter
 import os
 import copy
+pygame.mixer.music.load('Netherplace.mp3')
 
 def mainMenu():
     #buttons
@@ -131,10 +132,10 @@ def multiPlayerMenu():
             if musicCheckbox.isClicked(event):
                 #check or uncheck music box
                 musicCheckbox.switchState()
-                if musicCheckbox.state == True:
-                    musicCheckbox = Checkbox((DISPLAY_WIDTH*0.1, DISPLAY_HEIGHT*0.3), trueImageDirectory)
-                elif musicCheckbox.state == False:
-                    musicCheckbox = Checkbox((DISPLAY_WIDTH*0.1, DISPLAY_HEIGHT*0.3))
+                if pygame.mixer.music.get_busy() == True:
+                    pygame.mixer.music.stop()
+                elif pygame.mixer.music.get_busy() == False:
+                    pygame.mixer.music.play(-1)
             if gameplay10Button.isClicked(event):     
                 gameplayMenu2(10)
             if gameplay14Button.isClicked(event):   
