@@ -1,5 +1,5 @@
 from card import *
-from directoryParser import *
+from directoryParser import DirectoryParser
 import random
 from pygameEnvironment import *
 from constant import *
@@ -13,9 +13,9 @@ class CardDeck:
     def loadCards(theme, numCards):
         '''returns a list of cards'''
         #get image directories
-        backDirectory = retrieveCardImages(theme, "back")
-        frontDirectories = retrieveCardImages(theme, "front")
-        solvedDirectory = retrieveCardImages(theme, "solved")
+        backDirectory = DirectoryParser.retrieveCardImages(theme, "back")
+        frontDirectories = DirectoryParser.retrieveCardImages(theme, "front")
+        solvedDirectory = DirectoryParser.retrieveCardImages(theme, "solved")
 
         #randomize front card image directories
         random.shuffle(frontDirectories)
@@ -41,7 +41,7 @@ class CardDeck:
             cardList = CardDeck.load14Cards(theme, imageDirectories)
         elif numCards == 18:
             cardList = CardDeck.load18Cards(theme, imageDirectories)
-        
+
         return cardList
 
     def load10Cards(theme, imageDirectories):
@@ -129,7 +129,7 @@ class CardDeck:
 
         return cardList
 
-    def checkDeckStatus(self, score):
+    def checkDeckStatus(self, score, stats):
         'analyze if cards should be switched to solved state or flipped back down'
         'scan through cards to see if two cards are flipped face up'
         'if they match, switch them to solved'
@@ -147,6 +147,8 @@ class CardDeck:
 
             #if card images match, switched them to solved
             if self.deck[firstCardIndex].compareFrontImage(self.deck[secondCardIndex]):
+                stats.raiseCardsMatched()
+                print(stats.CardsMatched)   #Ibrahim added here
                 #display card front images
                 self.deck[firstCardIndex].showCard()
                 self.deck[secondCardIndex].showCard()
@@ -171,7 +173,7 @@ class CardDeck:
                 pygame.display.update()
 
                 #wait a bit
-                pygame.time.wait(800)
+                pygame.time.wait(2000)
 
                 #update state to back
                 self.deck[firstCardIndex].setStatus(CardStatus.back)
@@ -193,7 +195,7 @@ class CardDeck:
             return True
         else:
             return False
-        
+
 
 #test code
 if __name__ == "__main__":
@@ -219,4 +221,3 @@ if __name__ == "__main__":
     print("List of Front Images")
     for item in deck0.deck:
         print(item.cardImageDirectories[CardStatus.front])
-        

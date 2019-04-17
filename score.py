@@ -36,7 +36,6 @@ class Score:
 
         x = DISPLAY_WIDTH * 0.85
         TextPrinter.displayText(str(self.score), (x, y), 30, WHITE)
-
 #test code
 if __name__ == "__main__":
     pass
