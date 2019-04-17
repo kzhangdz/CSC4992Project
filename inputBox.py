@@ -1,8 +1,6 @@
 import pygame as pg
 #from pygameEnvironment import *
 
-#source: https://stackoverflow.com/questions/46390231/how-to-create-a-text-input-box-with-pygame
-
 COLOR_INACTIVE = pg.Color('lightskyblue3')
 COLOR_ACTIVE = pg.Color('dodgerblue2')
 FONT = pg.font.Font(None, 32)

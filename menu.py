@@ -11,7 +11,12 @@ from score import *
 from textPrinter import TextPrinter
 import os
 import copy
+
 pygame.mixer.music.load('Netherplace.mp3')
+
+from statistics import *
+
+stats = Statistics() #global
 
 def mainMenu():
     #buttons
@@ -21,6 +26,9 @@ def mainMenu():
     
     singlePlayerButton = ImageButton((DISPLAY_WIDTH*0.33, DISPLAY_HEIGHT*0.5), singleImgDirectory)
     multiPlayerButton = ImageButton((DISPLAY_WIDTH*0.66, DISPLAY_HEIGHT*0.5), multiImgDirectory)
+
+    imgDirectory = os.path.join(os.path.abspath(os.curdir), 'images', 'menu', 'button_two-player.png')
+    multiPlayerButton = ImageButton((DISPLAY_WIDTH*0.66, DISPLAY_HEIGHT*0.5), imgDirectory)
 
     #game loop
     running = True
@@ -44,13 +52,14 @@ def mainMenu():
             if optionsButton.isClicked(event):
                 optionMenu('main')
 
-        gameDisplay.fill(FOREST_GREEN)
+        gameDisplay.fill(FOREST_GREEN)  #FOREST_GREEN
         singlePlayerButton.draw(gameDisplay)
         multiPlayerButton.draw(gameDisplay)
+
         TextPrinter.displayTitle("Bela Memoro") # TextPrinter.displayText("Bela Memoro", (DISPLAY_WIDTH*0.15, DISPLAY_HEIGHT*0.09), 30, BLACK)
         TextPrinter.displayText("A Memory Game", (DISPLAY_WIDTH*0.5, DISPLAY_HEIGHT*0.3), 30, BLACK)
         optionsButton.draw(gameDisplay)
-         
+
 
         pygame.display.update()
 
@@ -58,11 +67,13 @@ def mainMenu():
         clock.tick(FPS)
 
 def singlePlayerMenu():
+    global stats
     #buttons
-    
+
     gameplay10Button = Button((DISPLAY_WIDTH*0.5, DISPLAY_HEIGHT*0.5), (200, 40), RED, "Easy (10 cards)")
     gameplay14Button = Button((DISPLAY_WIDTH*0.5, DISPLAY_HEIGHT*0.65), (200, 40), RED, "Medium (14 cards)")
     gameplay18Button = Button((DISPLAY_WIDTH*0.5, DISPLAY_HEIGHT*0.8), (200, 40), RED, "Hard (18 cards)")
+
 
     #game loop
     running = True
@@ -81,36 +92,81 @@ def singlePlayerMenu():
                 #call main menu
                 mainMenu()
             if gameplay10Button.isClicked(event):
+                stats.raiseGamesPlayed()
+                print(stats.GamesPlayed)
                 gameplayMenu(10)
             if gameplay14Button.isClicked(event):
+                stats.raiseGamesPlayed()
+                print(stats.GamesPlayed)
                 gameplayMenu(14)
             if gameplay18Button.isClicked(event):
+                stats.raiseGamesPlayed()
+                print(stats.GamesPlayed)
                 gameplayMenu(18)
             if optionsButton.isClicked(event):
                 optionMenu('single')
 
-            gameDisplay.fill(FOREST_GREEN)
+            gameDisplay.fill(FOREST_GREEN) # FOREST_GREEN
             backButton.draw(gameDisplay)
             optionsButton.draw(gameDisplay)
 
             gameplay10Button.draw(gameDisplay)
             gameplay14Button.draw(gameDisplay)
             gameplay18Button.draw(gameDisplay)
+
             
             TextPrinter.displayText("Single Player", (DISPLAY_WIDTH*0.50, DISPLAY_HEIGHT*0.3), 75, BLACK)
             TextPrinter.displayText("Bela Memoro", (DISPLAY_WIDTH*0.85, DISPLAY_HEIGHT*0.09), 30, BLACK)
+
+            pygame.display.update()
+
+            #set frames per second
+            clock.tick(FPS)
+
+def statisticsMenu():
+    global stats
+
+    #statistic = Statistics()
+    #buttons
+    backButton = Button((DISPLAY_WIDTH*0.1, DISPLAY_HEIGHT*0.1), (80, 40), RED, "Back")
+
+    #game loop
+    running = True
+
+    while running:
+        #events
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                exit()
+            elif event.type == pygame.KEYDOWN:
+                 if event.key == pygame.K_ESCAPE: # quit when pressing escape
+                     pygame.quit()
+
+            if backButton.isClicked(event):
+                #call main menu
+                mainMenu()
+
+            gameDisplay.fill(FOREST_GREEN) #FOREST_GREEN
+            backButton.draw(gameDisplay)
+
+            TextPrinter.displayText("Statistics", (DISPLAY_WIDTH*0.50, DISPLAY_HEIGHT*0.15), 75, BLACK) #changed-ibrahim
+            #TextPrinter.displayText(str(stats.CardsClicked), (DISPLAY_WIDTH*0.30, DISPLAY_HEIGHT*0.35), 50, FOREST_GREEN)
+            stats.displayStats() #IBRAHIM DISPLAY doesnt work
+
             pygame.display.update()
 
             #set frames per second
             clock.tick(FPS)
 
 def multiPlayerMenu():
+    global stats
     #buttons
     gameplay10Button = Button((DISPLAY_WIDTH*0.5, DISPLAY_HEIGHT*0.5), (200, 40), RED, "Easy (10 cards)")
     gameplay14Button = Button((DISPLAY_WIDTH*0.5, DISPLAY_HEIGHT*0.65), (200, 40), RED, "Medium (14 cards)")
     gameplay18Button = Button((DISPLAY_WIDTH*0.5, DISPLAY_HEIGHT*0.8), (200, 40), RED, "Hard (18 cards)")
 
-    
+
     #game loop
     running = True
 
@@ -131,21 +187,29 @@ def multiPlayerMenu():
             if optionsButton.isClicked(event):
                 optionMenu('multi')
                 
-            if gameplay10Button.isClicked(event):     
+            if gameplay10Button.isClicked(event):
+                stats.raiseGamesPlayed()
+                print(stats.GamesPlayed)
                 gameplayMenu2(10)
-            if gameplay14Button.isClicked(event):   
+            if gameplay14Button.isClicked(event):
+                stats.raiseGamesPlayed()
+                print(stats.GamesPlayed)
                 gameplayMenu2(14)
             if gameplay18Button.isClicked(event):
+                stats.raiseGamesPlayed()
+                print(stats.GamesPlayed)
                 gameplayMenu2(18)
                 
 
-            gameDisplay.fill(FOREST_GREEN)
+            gameDisplay.fill(FOREST_GREEN) #FOREST_GREEN
             backButton.draw(gameDisplay)
+
             gameplay10Button.draw(gameDisplay)
             gameplay14Button.draw(gameDisplay)
             gameplay18Button.draw(gameDisplay)
 			
             TextPrinter.displayText("Multi Player", (DISPLAY_WIDTH*0.50, DISPLAY_HEIGHT*0.3), 75, BLACK)
+
 
             TextPrinter.displayText("Bela Memoro", (DISPLAY_WIDTH*0.85, DISPLAY_HEIGHT*0.09), 30, BLACK)
             optionsButton.draw(gameDisplay)
@@ -158,10 +222,12 @@ def multiPlayerMenu():
             clock.tick(FPS)
 
 def gameplayMenu(numCards):
+    global stats
     #needs to pass in parameters that define game state
     #alternatively, options menu should open in a new frame above the current one
 
     #declare card deck
+    #FIXME: refactor use different themes
     currentDeck = CardDeck("theme1", numCards)
 
     #declare score
@@ -178,7 +244,9 @@ def gameplayMenu(numCards):
                 exit()
             elif event.type == pygame.KEYDOWN:
                  if event.key == pygame.K_ESCAPE: # quit when pressing escape
-                     pygame.quit()   
+                     pygame.quit()
+
+            #print(event)  #TESTING FOR EVENT
 
             '''if backButton.isClicked(event):
                 #call main menu
@@ -190,24 +258,28 @@ def gameplayMenu(numCards):
             #switch card state if clicked
             for card in currentDeck.deck:
                 if card.isClicked(event):
+                    stats.raiseCardsClicked()
+                    print(stats.CardsClicked)  #testing
                     print(card.cardImageDirectories[card.status], card.position)
                     card.switchStatus()
 
             #background
+
             gameDisplay.fill(FOREST_GREEN)
             #backButton.draw(gameDisplay)
             optionsButton.draw(gameDisplay)
+
             currentScore.displayScore()
             currentScore.displayMultiplier()
             TextPrinter.displayText("Bela Memoro", (DISPLAY_WIDTH*0.15, DISPLAY_HEIGHT*0.09), 30, BLACK)
 
             #show cards
             for card in currentDeck.deck:
-                card.showCard() 
+                card.showCard()
 
             #check state of deck to see if cards should be flipped
-            currentDeck.checkDeckStatus(currentScore)
-            
+            currentDeck.checkDeckStatus(currentScore, stats) #checks for cards matched
+
             pygame.display.update()
 
             #if all cards face up, send user to results screen
@@ -218,6 +290,7 @@ def gameplayMenu(numCards):
             clock.tick(FPS)
 			
 def gameplayMenu2(numCards):
+    global stats
     #needs to pass in parameters that define game state
     #alternatively, options menu should open in a new frame above the current one
     turn = 0
@@ -258,6 +331,8 @@ def gameplayMenu2(numCards):
             for card in currentDeck.deck:
                 if card.isClicked(event):
                     clickCount += 1
+                    stats.raiseCardsClicked()
+                    print(stats.CardsClicked) 
                     print(card.cardImageDirectories[card.status], card.position)
                     print("Turn:", turn, " Clicks:", clickCount)
                     card.switchStatus()
@@ -276,7 +351,7 @@ def gameplayMenu2(numCards):
                 card.showCard() 
             
             #check state of deck to see if cards should be flipped
-            currentDeck.checkDeckStatus2(currentScore, turn)
+            currentDeck.checkDeckStatus2(currentScore, turn, stats)
             
             pygame.display.update()
 
@@ -303,7 +378,7 @@ def resultMenu(score, displayMessage, numCards, mode):
     #buttons
     highScoreButton = Button((DISPLAY_WIDTH*0.5, DISPLAY_HEIGHT*0.6), (200, 80), RED, "Save Score")
     menuButton = Button((DISPLAY_WIDTH*0.5, DISPLAY_HEIGHT*0.8), (200, 80), RED, "Return to Menu")
-    
+
     running = True
 
     while running:
@@ -314,7 +389,7 @@ def resultMenu(score, displayMessage, numCards, mode):
                 exit()
             elif event.type == pygame.KEYDOWN:
                  if event.key == pygame.K_ESCAPE: # quit when pressing escape
-                     pygame.quit()   
+                     pygame.quit()
 
             if menuButton.isClicked(event):
                 #call main menu
@@ -324,13 +399,14 @@ def resultMenu(score, displayMessage, numCards, mode):
                 highScoreMenu(score, numCards)
 
             #background
-            gameDisplay.fill(FOREST_GREEN)
+            gameDisplay.fill(FOREST_GREEN) #FOREST_GREEN
 
-            TextPrinter.displayText(displayMessage, (DISPLAY_WIDTH*0.5, DISPLAY_HEIGHT*0.4), 75, BLACK)
-            
+            TextPrinter.displayText(displayMessage, (DISPLAY_WIDTH*0.5, DISPLAY_HEIGHT*0.4), 75, BLACK) #changed-ibrahim
+
             score.displayScore()
 
             menuButton.draw(gameDisplay)
+
 
             if mode == "single":
                 highScoreButton.draw(gameDisplay)
@@ -360,10 +436,11 @@ def highScoreMenu(score, numCards):
                      pygame.quit()
 
             userName = userInput.handle_event(event)
-    
+
             userInput.update()
 
             if userName != None: #if userInput box was given an input
+
                 try:
                     if len(userName) > 10:
                         raise ValueError('Data should not exceed 10 characters. Length was ()'.format(len(userName)))
@@ -374,6 +451,7 @@ def highScoreMenu(score, numCards):
                 except ValueError as err:
                     print('Did not save user. Character length exceeded.')
 
+
             if highScoreDisplayButton.isClicked(event):
                 highScoreDisplayMenu(numCards)
             if menuButton.isClicked(event):
@@ -381,18 +459,20 @@ def highScoreMenu(score, numCards):
                 mainMenu()
 
             #background
-            gameDisplay.fill(FOREST_GREEN)
+            gameDisplay.fill(FOREST_GREEN) #FOREST_GREEN
+
+
 
             TextPrinter.displayText("Enter your name", (DISPLAY_WIDTH*0.5, DISPLAY_HEIGHT*0.4), 75, BLACK)
             TextPrinter.displayText("Limit: 10 characters", (DISPLAY_WIDTH*0.5, DISPLAY_HEIGHT*0.4), 25, BLACK)
-            
+
             score.displayScore()
 
             highScoreDisplayButton.draw(gameDisplay)
             menuButton.draw(gameDisplay)
 
             userInput.draw(gameDisplay)
-            
+
             pygame.display.update()
 
             #set frames per second
@@ -402,8 +482,6 @@ def highScoreDisplayMenu(numCards):
     scoreList = getTop10Scores(numCards)
     menuButton = Button((DISPLAY_WIDTH*0.5, DISPLAY_HEIGHT*0.8), (200, 80), RED, "Return to Menu")
     highScoreLabel = "High Scores (" + str(numCards) + " Cards)"
-
-    recursionButton = Button((DISPLAY_WIDTH*0.2, DISPLAY_HEIGHT*0.9), (200, 80), RED, "Test Recursion")
 
     #positions of text
     nameXPos = DISPLAY_WIDTH*0.33
@@ -425,32 +503,32 @@ def highScoreDisplayMenu(numCards):
             if menuButton.isClicked(event):
                 #call main menu
                 mainMenu()
+
             if recursionButton.isClicked(event):
                 #call main menu
                 testRecursion(scoreList)
-                
-            #background
-            gameDisplay.fill(FOREST_GREEN)
 
-            TextPrinter.displayText(highScoreLabel, (DISPLAY_WIDTH*0.5, DISPLAY_HEIGHT*0.1), 65, BLACK)
+            #background
+            gameDisplay.fill(FOREST_GREEN) #FOREST_GREEN
+
+            TextPrinter.displayText(highScoreLabel, (DISPLAY_WIDTH*0.5, DISPLAY_HEIGHT*0.1), 65, BLACK) #changed-ibrahim
 
             scoreYPos = DISPLAY_HEIGHT * 0.2
             for row in scoreList:
                 #display name
-                TextPrinter.displayText(str(row[0]), (nameXPos, scoreYPos), 30, BLACK)
+                TextPrinter.displayText(str(row[0]), (nameXPos, scoreYPos), 30, BLACK) #changed-ibrahim
                 #display score
-                TextPrinter.displayText(str(row[1]), (scoreXPos, scoreYPos), 30, BLACK)
+                TextPrinter.displayText(str(row[1]), (scoreXPos, scoreYPos), 30, BLACK) #changed-ibrahim
                 #increase position counter
                 scoreYPos += DISPLAY_HEIGHT * 0.05
 
             menuButton.draw(gameDisplay)
-            recursionButton.draw(gameDisplay)
-            
+
             pygame.display.update()
 
             #set frames per second
             clock.tick(FPS)
-            
+
 def testRecursion(scoreList):
     def Sort(sub_li): 
         sub_li.sort(key = lambda x: x[0]) 
@@ -500,7 +578,7 @@ def optionMenu(previous_page):
 # declared buttons
     creditsButton = ImageButton((DISPLAY_WIDTH * 0.5, DISPLAY_HEIGHT * 0.65), imgDirectoryCredits)
     instructionsButton = ImageButton((DISPLAY_WIDTH * 0.5, DISPLAY_HEIGHT * 0.5), imageFile = instruction_icon)
-    statiscticsButton = ImageButton((DISPLAY_WIDTH * 0.09, DISPLAY_HEIGHT * 0.9), imageFile = stat_icon)
+    statisticsButton = ImageButton((DISPLAY_WIDTH * 0.09, DISPLAY_HEIGHT * 0.9), imageFile = stat_icon)
     musicCheckbox = Checkbox((DISPLAY_WIDTH*0.55, DISPLAY_HEIGHT*0.55))
     trueCheckboxBtn = ImageButton((DISPLAY_WIDTH * 0.55, DISPLAY_HEIGHT * 0.55), imageFile = trueCheckboxIcon)
     falseCheckboxBtn = ImageButton((DISPLAY_WIDTH * 0.55, DISPLAY_HEIGHT * 0.55), imageFile = falseCheckboxIcon)
@@ -525,7 +603,7 @@ def optionMenu(previous_page):
         backButton.draw(gameDisplay)
         creditsButton.draw(gameDisplay)
         instructionsButton.draw(gameDisplay)
-        statiscticsButton.draw(gameDisplay)
+        statisticsButton.draw(gameDisplay)
         #musicCheckbox.draw(gameDisplay)
         musicBtn.draw(gameDisplay)
 
@@ -558,6 +636,8 @@ def optionMenu(previous_page):
                 elif pygame.mixer.music.get_busy() == False:
                     pygame.mixer.music.play(-1)
                     musicBtn = trueCheckboxBtn
+            if statisticsButton.isClicked(event):
+                statisticsMenu()
             '''if musicCheckbox.isClicked(event):
                 musicCheckbox.switchState()
                 if pygame.mixer.music.get_busy() == True:
@@ -569,6 +649,7 @@ def optionMenu(previous_page):
         clock.tick(FPS)
 	#pygame.display.update()
 	#clock.tick(FPS)
+
 if __name__ == "__main__":
     startPage = input("Choose start page (main, highscore): ")
 

@@ -31,10 +31,12 @@ class Button:
             if event.button == 1:
                 return self.rect.collidepoint(event.pos)
 
+
 class ImageButton(Button):
     def __init__(self, position, imageDirectory = None, imageFile = None):
         if imageDirectory is not None:
             imageFile = pygame.image.load(imageDirectory)
+
 
         #tie pygame.Surface to pygame.image
         #get image size
@@ -51,6 +53,7 @@ class ImageButton(Button):
 
         # set after centering text
         self.rect.center = position
+
 
 if __name__ == "__main__":
     #imgDirectory = os.path.join(os.path.abspath(os.curdir), 'images', 'menu', 'back_button.png')

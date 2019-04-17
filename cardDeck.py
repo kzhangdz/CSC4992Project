@@ -41,7 +41,7 @@ class CardDeck:
             cardList = CardDeck.load14Cards(theme, imageDirectories)
         elif numCards == 18:
             cardList = CardDeck.load18Cards(theme, imageDirectories)
-        
+
         return cardList
 
     def load10Cards(theme, imageDirectories):
@@ -129,7 +129,7 @@ class CardDeck:
 
         return cardList
 
-    def checkDeckStatus(self, score):
+    def checkDeckStatus(self, score, stats):
         'analyze if cards should be switched to solved state or flipped back down'
         'scan through cards to see if two cards are flipped face up'
         'if they match, switch them to solved'
@@ -147,6 +147,8 @@ class CardDeck:
 
             #if card images match, switched them to solved
             if self.deck[firstCardIndex].compareFrontImage(self.deck[secondCardIndex]):
+                stats.raiseCardsMatched()
+                print(stats.CardsMatched)   #Ibrahim added here
                 #display card front images
                 self.deck[firstCardIndex].showCard()
                 self.deck[secondCardIndex].showCard()
@@ -171,7 +173,7 @@ class CardDeck:
                 pygame.display.update()
 
                 #wait a bit
-                pygame.time.wait(800)
+                pygame.time.wait(2000)
 
                 #update state to back
                 self.deck[firstCardIndex].setStatus(CardStatus.back)
@@ -182,7 +184,7 @@ class CardDeck:
 
         #may need to call checkAllFaceUp function
                 
-    def checkDeckStatus2(self, score, turn):
+    def checkDeckStatus2(self, score, turn, stats):
         'analyze if cards should be switched to solved state or flipped back down'
         'scan through cards to see if two cards are flipped face up'
         'if they match, switch them to solved'
@@ -199,6 +201,8 @@ class CardDeck:
             secondCardIndex = frontCardIndexList[1]
             #if card images match, switched them to solved
             if self.deck[firstCardIndex].compareFrontImage(self.deck[secondCardIndex]):
+                stats.raiseCardsMatched()
+                print(stats.CardsMatched)
                 #display card front images
                 self.deck[firstCardIndex].showCard()
                 self.deck[secondCardIndex].showCard()
@@ -253,7 +257,7 @@ class CardDeck:
             return True
         else:
             return False
-        
+
 
 #test code
 if __name__ == "__main__":
@@ -279,4 +283,3 @@ if __name__ == "__main__":
     print("List of Front Images")
     for item in deck0.deck:
         print(item.cardImageDirectories[CardStatus.front])
-        

@@ -26,6 +26,7 @@ BLACK = (0,0,0)
 WHITE = (255,255,255)
 RED = (255,0,0)
 FOREST_GREEN = (34,139,34)
+BLUE = (0,0,255)
 
 # screen positions
 top_left = (DISPLAY_WIDTH * 0.07, DISPLAY_HEIGHT * 0.07)
@@ -42,3 +43,4 @@ imgDirectoryBack = os.path.join(os.path.abspath(os.curdir), 'images', 'menu', 'b
 back_arrow = pygame.image.load(imgDirectoryBack)
 back_arrow = pygame.transform.scale(back_arrow, (math.floor(DISPLAY_WIDTH * 0.15), math.floor(DISPLAY_HEIGHT * 0.1)))
 backButton = ImageButton(top_left, imageFile = back_arrow)
+
