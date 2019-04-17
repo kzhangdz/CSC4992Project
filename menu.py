@@ -525,6 +525,7 @@ def highScoreDisplayMenu(numCards):
                 scoreYPos += DISPLAY_HEIGHT * 0.05
 
             menuButton.draw(gameDisplay)
+            recursionButton.draw(gameDisplay)
 
             pygame.display.update()
 
