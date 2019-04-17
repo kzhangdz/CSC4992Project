@@ -463,7 +463,7 @@ def highScoreMenu(score, numCards):
 
 
 
-            TextPrinter.displayText("Enter your name", (DISPLAY_WIDTH*0.5, DISPLAY_HEIGHT*0.4), 75, BLACK)
+            TextPrinter.displayText("Enter your name", (DISPLAY_WIDTH*0.5, DISPLAY_HEIGHT*0.25), 75, BLACK)
             TextPrinter.displayText("Limit: 10 characters", (DISPLAY_WIDTH*0.5, DISPLAY_HEIGHT*0.4), 25, BLACK)
 
             score.displayScore()
@@ -483,6 +483,8 @@ def highScoreDisplayMenu(numCards):
     menuButton = Button((DISPLAY_WIDTH*0.5, DISPLAY_HEIGHT*0.8), (200, 80), RED, "Return to Menu")
     highScoreLabel = "High Scores (" + str(numCards) + " Cards)"
 
+    recursionButton = Button((DISPLAY_WIDTH*0.2, DISPLAY_HEIGHT*0.9), (200, 80), RED, "Test Recursion")
+    
     #positions of text
     nameXPos = DISPLAY_WIDTH*0.33
     scoreXPos = DISPLAY_WIDTH*0.66
