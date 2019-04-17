@@ -486,18 +486,29 @@ def optionMenu(previous_page):
     imgDirectoryCredits = os.path.join(os.path.abspath(os.curdir), 'images', 'menu', 'button_credits.png')
     imgDirectoryInstructions = os.path.join(os.path.abspath(os.curdir), 'images', 'menu', 'instructions.png')
     imgDirectoryStatistics = os.path.join(os.path.abspath(os.curdir), 'images', 'menu', 'stats.png')
+    imgDirectoryTrueCheckbox = os.path.join(os.path.abspath(os.curdir),'images', 'menu', 'checkbox_true.png')
+    imgDirectoryFalseCheckbox = os.path.join(os.path.abspath(os.curdir),'images', 'menu', 'checkbox_false.png')
 
     # scaled images
     instruction_icon = pygame.image.load(imgDirectoryInstructions)
     instruction_icon = pygame.transform.scale(instruction_icon, (math.floor(DISPLAY_WIDTH * 0.35), math.floor(DISPLAY_HEIGHT * 0.3)))
     stat_icon = pygame.image.load(imgDirectoryStatistics)
     stat_icon = pygame.transform.scale(stat_icon, (math.floor(DISPLAY_WIDTH * 0.1), math.floor(DISPLAY_HEIGHT * 0.15)))
+    trueCheckboxIcon = pygame.image.load(imgDirectoryTrueCheckbox)
+    falseCheckboxIcon= pygame.image.load(imgDirectoryFalseCheckbox)
 
 # declared buttons
     creditsButton = ImageButton((DISPLAY_WIDTH * 0.5, DISPLAY_HEIGHT * 0.65), imgDirectoryCredits)
     instructionsButton = ImageButton((DISPLAY_WIDTH * 0.5, DISPLAY_HEIGHT * 0.5), imageFile = instruction_icon)
     statiscticsButton = ImageButton((DISPLAY_WIDTH * 0.09, DISPLAY_HEIGHT * 0.9), imageFile = stat_icon)
     musicCheckbox = Checkbox((DISPLAY_WIDTH*0.55, DISPLAY_HEIGHT*0.55))
+    trueCheckboxBtn = ImageButton((DISPLAY_WIDTH * 0.55, DISPLAY_HEIGHT * 0.55), imageFile = trueCheckboxIcon)
+    falseCheckboxBtn = ImageButton((DISPLAY_WIDTH * 0.55, DISPLAY_HEIGHT * 0.55), imageFile = falseCheckboxIcon)
+    musicBtn = 0
+    if pygame.mixer.music.get_busy() == False:
+        musicBtn = falseCheckboxBtn
+    elif pygame.mixer.music.get_busy() == True:
+        musicBtn = trueCheckboxBtn
 # cancel gameplay
     imgDirectoryClose = os.path.join(os.path.abspath(os.curdir), 'images', 'menu', 'button_x.png')	# 'cancel_game.png'
     closeButton = ImageButton(bottom_right, imgDirectoryClose)
@@ -515,7 +526,8 @@ def optionMenu(previous_page):
         creditsButton.draw(gameDisplay)
         instructionsButton.draw(gameDisplay)
         statiscticsButton.draw(gameDisplay)
-        musicCheckbox.draw(gameDisplay)
+        #musicCheckbox.draw(gameDisplay)
+        musicBtn.draw(gameDisplay)
 
         if previous_page == 'gameplay':
             closeButton.draw(gameDisplay)
@@ -539,13 +551,20 @@ def optionMenu(previous_page):
                     multiPlayerMenu()
             if closeButton.isClicked(event):
                 mainMenu()
-            if musicCheckbox.isClicked(event):
+            if musicBtn.isClicked(event):
+                if pygame.mixer.music.get_busy() == True:
+                    pygame.mixer.music.stop()
+                    musicBtn = falseCheckboxBtn
+                elif pygame.mixer.music.get_busy() == False:
+                    pygame.mixer.music.play(-1)
+                    musicBtn = trueCheckboxBtn
+            '''if musicCheckbox.isClicked(event):
                 musicCheckbox.switchState()
                 if pygame.mixer.music.get_busy() == True:
                     pygame.mixer.music.stop()
                 elif pygame.mixer.music.get_busy() == False:
                     pygame.mixer.music.play(-1)
-                                
+              '''                  
         pygame.display.update()
         clock.tick(FPS)
 	#pygame.display.update()
