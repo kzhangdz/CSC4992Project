@@ -4,7 +4,7 @@ if __name__ == "__main__":
 
     while True:
         "Start at main page, single player, or multiplayer?"
-        startPage = input("Enter main, single, multi, stats or quit: ")
+        startPage = input("Enter main, single, multi, or quit: ")
         try:
             if startPage == "main":
                 import menu
@@ -15,9 +15,6 @@ if __name__ == "__main__":
             elif startPage == "multi":
                 import menu
                 menu.multiPlayerMenu()
-            elif startPage == "stats":
-                import menu
-                menu.statisticsMenu()
             elif startPage == "quit":
                 quit()
             else:
