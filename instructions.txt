@@ -1,4 +1,4 @@
-Welcome to the Python Memory Game!
+﻿Welcome to the Python Memory Game!
 In Memory, several cards are displayed face down on a
 board. Each card has a matching pair. The goal of a
 single player game is to match pairs until all cards on
@@ -12,7 +12,7 @@ score and will increase for every pair you match in a
 row. However, if you lose your matching streak, the
 multiplier will reset. Try to get the highest score
 possible! After a single player game, you can save your
-score, as well as view other people’s scores.
+score, as well as view other people's scores.
 In multiplayer, the rules are the same as a single
 player game, but players will take turns matching two
 cards at a time. The player with the highest score at
