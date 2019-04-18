@@ -562,14 +562,14 @@ def testRecursion(scoreList):
 def optionMenu(previous_page):
     # button images
     imgDirectoryCredits = os.path.join(os.path.abspath(os.curdir), 'images', 'menu', 'button_credits.png')
-    imgDirectoryInstructions = os.path.join(os.path.abspath(os.curdir), 'images', 'menu', 'instructions.png')
+    #imgDirectoryInstructions = os.path.join(os.path.abspath(os.curdir), 'images', 'menu', 'instructions.png')
     imgDirectoryStatistics = os.path.join(os.path.abspath(os.curdir), 'images', 'menu', 'stats.png')
     imgDirectoryTrueCheckbox = os.path.join(os.path.abspath(os.curdir),'images', 'menu', 'checkbox_true.png')
     imgDirectoryFalseCheckbox = os.path.join(os.path.abspath(os.curdir),'images', 'menu', 'checkbox_false.png')
 
     # scaled images
-    instruction_icon = pygame.image.load(imgDirectoryInstructions)
-    instruction_icon = pygame.transform.scale(instruction_icon, (math.floor(DISPLAY_WIDTH * 0.35), math.floor(DISPLAY_HEIGHT * 0.3)))
+    '''instruction_icon = pygame.image.load(imgDirectoryInstructions)
+    instruction_icon = pygame.transform.scale(instruction_icon, (math.floor(DISPLAY_WIDTH * 0.35), math.floor(DISPLAY_HEIGHT * 0.3)))'''
     stat_icon = pygame.image.load(imgDirectoryStatistics)
     stat_icon = pygame.transform.scale(stat_icon, (math.floor(DISPLAY_WIDTH * 0.1), math.floor(DISPLAY_HEIGHT * 0.15)))
     trueCheckboxIcon = pygame.image.load(imgDirectoryTrueCheckbox)
@@ -577,7 +577,8 @@ def optionMenu(previous_page):
 
 # declared buttons
     creditsButton = ImageButton((DISPLAY_WIDTH * 0.5, DISPLAY_HEIGHT * 0.65), imgDirectoryCredits)
-    instructionsButton = ImageButton((DISPLAY_WIDTH * 0.5, DISPLAY_HEIGHT * 0.5), imageFile = instruction_icon)
+    #instructionsButton = ImageButton((DISPLAY_WIDTH * 0.5, DISPLAY_HEIGHT * 0.5), imageFile = instruction_icon)
+    instructionsButton = Button((DISPLAY_WIDTH*0.5, DISPLAY_HEIGHT*0.45), (200, 40), RED, "How to Play")
     statisticsButton = ImageButton((DISPLAY_WIDTH * 0.09, DISPLAY_HEIGHT * 0.9), imageFile = stat_icon)
     musicCheckbox = Checkbox((DISPLAY_WIDTH*0.55, DISPLAY_HEIGHT*0.55))
     trueCheckboxBtn = ImageButton((DISPLAY_WIDTH * 0.55, DISPLAY_HEIGHT * 0.55), imageFile = trueCheckboxIcon)
@@ -596,7 +597,7 @@ def optionMenu(previous_page):
     while running:
         # display info
         gameDisplay.fill(FOREST_GREEN)
-        TextPrinter.displayText("Options", (DISPLAY_WIDTH*0.50, DISPLAY_HEIGHT*0.3), 75, BLACK)
+        TextPrinter.displayText("Options", (DISPLAY_WIDTH*0.50, DISPLAY_HEIGHT*0.25), 75, BLACK)
         TextPrinter.displayText("Bela Memoro", (DISPLAY_WIDTH*0.85, DISPLAY_HEIGHT*0.09), 30, BLACK)
         TextPrinter.displayText("Music", (DISPLAY_WIDTH*0.45, DISPLAY_HEIGHT*0.55), 30, BLACK)
 
@@ -638,6 +639,10 @@ def optionMenu(previous_page):
                     musicBtn = trueCheckboxBtn
             if statisticsButton.isClicked(event):
                 statisticsMenu()
+            if creditsButton.isClicked(event):
+                creditsPage()
+            if instructionsButton.isClicked(event):
+                instructionsPage()
             '''if musicCheckbox.isClicked(event):
                 musicCheckbox.switchState()
                 if pygame.mixer.music.get_busy() == True:
@@ -649,6 +654,120 @@ def optionMenu(previous_page):
         clock.tick(FPS)
 	#pygame.display.update()
 	#clock.tick(FPS)
+
+def readTextfile(filename):
+	contents_stripped = []
+	
+	with open(filename, 'r', encoding='utf-8') as file:
+		for line in file:
+			contents_stripped.append(line.rstrip())
+	
+	return contents_stripped
+
+def instructionsPage():
+	contents = readTextfile("instructions.txt")
+	
+	imgDirectoryUp = os.path.join(os.path.abspath(os.curdir), 'images', 'menu', 'up_arrow.png')
+	imgDirectoryDown = os.path.join(os.path.abspath(os.curdir), 'images', 'menu', 'down_arrow.png')
+	up_arrow = pygame.image.load(imgDirectoryUp)
+	down_arrow = pygame.image.load(imgDirectoryDown)
+	up_arrow = pygame.transform.scale(up_arrow, (math.floor(DISPLAY_WIDTH * 0.08), math.floor(DISPLAY_HEIGHT * 0.1)))
+	down_arrow = pygame.transform.scale(down_arrow, (math.floor(DISPLAY_WIDTH * 0.08), math.floor(DISPLAY_HEIGHT * 0.1)))
+	upButton = ImageButton((DISPLAY_WIDTH * 0.9, DISPLAY_HEIGHT * 0.48), imageFile = up_arrow)
+	downButton = ImageButton((DISPLAY_WIDTH * 0.9, DISPLAY_HEIGHT * 0.65), imageFile = down_arrow)
+	
+	skip = 0
+	running = True
+	
+	while running:
+		gameDisplay.fill(FOREST_GREEN)
+		backButton.draw(gameDisplay)
+		upButton.draw(gameDisplay)
+		downButton.draw(gameDisplay)
+		
+		TextPrinter.displayText("How to Play", (DISPLAY_WIDTH * 0.50, DISPLAY_HEIGHT * 0.20), 75, BLACK)
+		TextPrinter.displayText("Bela Memoro", (DISPLAY_WIDTH * 0.85, DISPLAY_HEIGHT * 0.09), 30, BLACK)
+		
+		line_pos = DISPLAY_HEIGHT * 0.35
+		i = 0
+		
+		if skip == 0:
+			for line in contents:
+				if (i - skip) > 13:		# no more than 13 lines on the screen at once
+					i += 1
+					continue
+				TextPrinter.displayText(line, (DISPLAY_WIDTH * 0.5, line_pos), 20, BLACK)
+				line_pos += DISPLAY_HEIGHT * 0.04
+				i += 1
+		else:
+			for line in contents:
+				if i < skip:
+					i += 1
+					continue
+				TextPrinter.displayText(line, (DISPLAY_WIDTH * 0.5, line_pos), 20, BLACK)
+				line_pos += DISPLAY_HEIGHT * 0.04
+				i += 1
+		
+		for event in pygame.event.get():
+			if event.type == pygame.QUIT:
+				pygame.quit()
+				exit()
+			elif event.type == pygame.KEYDOWN:
+				if event.key == pygame.K_ESCAPE:
+					pygame.quite()
+			
+			
+			if backButton.isClicked(event):
+				return
+			if upButton.isClicked(event):
+				if skip == 6:
+					skip = 0
+					i = 0
+			if downButton.isClicked(event):
+				if skip == 0:
+					skip = 6
+					i = 0
+		
+		pygame.display.update()
+		clock.tick(FPS)
+
+def creditsPage():
+	contents = readTextfile("credits.txt")
+	
+	running = True
+	
+	while running:
+		gameDisplay.fill(FOREST_GREEN)
+		backButton.draw(gameDisplay)
+		
+		TextPrinter.displayText("Credits Page", (DISPLAY_WIDTH * 0.50, DISPLAY_HEIGHT * 0.20), 75, BLACK)
+		TextPrinter.displayText("Bela Memoro", (DISPLAY_WIDTH * 0.85, DISPLAY_HEIGHT * 0.09), 30, BLACK)
+		
+		line_pos = DISPLAY_HEIGHT * 0.35
+		for line in contents:
+			if "Updated:" in line:
+				TextPrinter.displayText(line, (DISPLAY_WIDTH * 0.2, DISPLAY_HEIGHT * 0.9), 20, BLACK)
+				continue
+			if "Music:" in line:
+				TextPrinter.displayText(line, (DISPLAY_WIDTH * 0.5, line_pos), 23, BLACK)
+				continue
+			TextPrinter.displayText(line, (DISPLAY_WIDTH * 0.5, line_pos), 35, BLACK)
+			line_pos += DISPLAY_HEIGHT * 0.07
+		
+		for event in pygame.event.get():
+			if event.type == pygame.QUIT:
+				pygame.quit()
+				exit()
+			elif event.type == pygame.KEYDOWN:
+				if event.key == pygame.K_ESCAPE:
+					pygame.quite()
+			
+			
+			if backButton.isClicked(event):
+				return
+		
+		pygame.display.update()
+		clock.tick(FPS)
 
 if __name__ == "__main__":
     startPage = input("Choose start page (main, highscore): ")
