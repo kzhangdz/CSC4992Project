@@ -16,7 +16,6 @@ class Score:
 
     def raiseScore(self):
         'increase score'
-        #FIXME: Implement a more complex algorithm
         bonus = self.multiplier * 50
         scoreAddition = 100 + bonus
         self.score = self.score + scoreAddition
