@@ -173,7 +173,7 @@ class CardDeck:
                 pygame.display.update()
 
                 #wait a bit
-                pygame.time.wait(2000)
+                pygame.time.wait(800)
 
                 #update state to back
                 self.deck[firstCardIndex].setStatus(CardStatus.back)

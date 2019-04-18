@@ -23,7 +23,7 @@ def mainMenu():
     singleImgDirectory = os.path.join(os.path.abspath(os.curdir), 'images', 'menu', 'button_single-player.png')
     multiImgDirectory = os.path.join(os.path.abspath(os.curdir), 'images', 'menu', 'button_two-player.png')
     imgDirectoryOptions = os.path.join(os.path.abspath(os.curdir), 'images', 'menu', 'hamburger.png')
-    
+
     singlePlayerButton = ImageButton((DISPLAY_WIDTH*0.33, DISPLAY_HEIGHT*0.5), singleImgDirectory)
     multiPlayerButton = ImageButton((DISPLAY_WIDTH*0.66, DISPLAY_HEIGHT*0.5), multiImgDirectory)
 
@@ -114,7 +114,7 @@ def singlePlayerMenu():
             gameplay14Button.draw(gameDisplay)
             gameplay18Button.draw(gameDisplay)
 
-            
+
             TextPrinter.displayText("Single Player", (DISPLAY_WIDTH*0.50, DISPLAY_HEIGHT*0.3), 75, BLACK)
             TextPrinter.displayText("Bela Memoro", (DISPLAY_WIDTH*0.85, DISPLAY_HEIGHT*0.09), 30, BLACK)
 
@@ -127,10 +127,7 @@ def statisticsMenu():
     global stats
 
     #statistic = Statistics()
-    #buttons
-    backButton = Button((DISPLAY_WIDTH*0.1, DISPLAY_HEIGHT*0.1), (80, 40), RED, "Back")
 
-    #game loop
     running = True
 
     while running:
@@ -144,8 +141,8 @@ def statisticsMenu():
                      pygame.quit()
 
             if backButton.isClicked(event):
-                #call main menu
-                mainMenu()
+                #call optionMenu
+                return  #goes back to function beforewards
 
             gameDisplay.fill(FOREST_GREEN) #FOREST_GREEN
             backButton.draw(gameDisplay)
@@ -183,10 +180,10 @@ def multiPlayerMenu():
             if backButton.isClicked(event):
                 #call main menu
                 mainMenu()
-            
+
             if optionsButton.isClicked(event):
                 optionMenu('multi')
-                
+
             if gameplay10Button.isClicked(event):
                 stats.raiseGamesPlayed()
                 print(stats.GamesPlayed)
@@ -199,7 +196,7 @@ def multiPlayerMenu():
                 stats.raiseGamesPlayed()
                 print(stats.GamesPlayed)
                 gameplayMenu2(18)
-                
+
 
             gameDisplay.fill(FOREST_GREEN) #FOREST_GREEN
             backButton.draw(gameDisplay)
@@ -207,7 +204,7 @@ def multiPlayerMenu():
             gameplay10Button.draw(gameDisplay)
             gameplay14Button.draw(gameDisplay)
             gameplay18Button.draw(gameDisplay)
-			
+
             TextPrinter.displayText("Multi Player", (DISPLAY_WIDTH*0.50, DISPLAY_HEIGHT*0.3), 75, BLACK)
 
 
@@ -288,7 +285,7 @@ def gameplayMenu(numCards):
 
             #set frames per second
             clock.tick(FPS)
-			
+
 def gameplayMenu2(numCards):
     global stats
     #needs to pass in parameters that define game state
@@ -306,7 +303,7 @@ def gameplayMenu2(numCards):
 
     #declare score
     currentScore = MultiplayerScore()
-    
+
     #game loop
     running = True
 
@@ -318,12 +315,12 @@ def gameplayMenu2(numCards):
                 exit()
             elif event.type == pygame.KEYDOWN:
                  if event.key == pygame.K_ESCAPE: # quit when pressing escape
-                     pygame.quit()   
+                     pygame.quit()
 
             #if backButton.isClicked(event):
                 #call main menu
                 #multiPlayerMenu()
-                     
+
             if optionsButton.isClicked(event):
                 optionMenu('gameplay')
 
@@ -332,7 +329,7 @@ def gameplayMenu2(numCards):
                 if card.isClicked(event):
                     clickCount += 1
                     stats.raiseCardsClicked()
-                    print(stats.CardsClicked) 
+                    print(stats.CardsClicked)
                     print(card.cardImageDirectories[card.status], card.position)
                     print("Turn:", turn, " Clicks:", clickCount)
                     card.switchStatus()
@@ -348,11 +345,11 @@ def gameplayMenu2(numCards):
 
             #show cards
             for card in currentDeck.deck:
-                card.showCard() 
-            
+                card.showCard()
+
             #check state of deck to see if cards should be flipped
             currentDeck.checkDeckStatus2(currentScore, turn, stats)
-            
+
             pygame.display.update()
 
             if clickCount >= 2:
@@ -373,7 +370,7 @@ def gameplayMenu2(numCards):
 
             #set frames per second
             clock.tick(FPS)
-            
+
 def resultMenu(score, displayMessage, numCards, mode):
     #buttons
     highScoreButton = Button((DISPLAY_WIDTH*0.5, DISPLAY_HEIGHT*0.6), (200, 80), RED, "Save Score")
@@ -410,7 +407,7 @@ def resultMenu(score, displayMessage, numCards, mode):
 
             if mode == "single":
                 highScoreButton.draw(gameDisplay)
-            
+
             pygame.display.update()
 
             #set frames per second
@@ -463,7 +460,7 @@ def highScoreMenu(score, numCards):
 
 
 
-            TextPrinter.displayText("Enter your name", (DISPLAY_WIDTH*0.5, DISPLAY_HEIGHT*0.4), 75, BLACK)
+            TextPrinter.displayText("Enter your name", (DISPLAY_WIDTH*0.5, DISPLAY_HEIGHT*0.25), 75, BLACK)
             TextPrinter.displayText("Limit: 10 characters", (DISPLAY_WIDTH*0.5, DISPLAY_HEIGHT*0.4), 25, BLACK)
 
             score.displayScore()
@@ -482,6 +479,8 @@ def highScoreDisplayMenu(numCards):
     scoreList = getTop10Scores(numCards)
     menuButton = Button((DISPLAY_WIDTH*0.5, DISPLAY_HEIGHT*0.8), (200, 80), RED, "Return to Menu")
     highScoreLabel = "High Scores (" + str(numCards) + " Cards)"
+
+    recursionButton = Button((DISPLAY_WIDTH*0.2, DISPLAY_HEIGHT*0.9), (200, 80), RED, "Test Recursion")
 
     #positions of text
     nameXPos = DISPLAY_WIDTH*0.33
@@ -523,6 +522,7 @@ def highScoreDisplayMenu(numCards):
                 scoreYPos += DISPLAY_HEIGHT * 0.05
 
             menuButton.draw(gameDisplay)
+            recursionButton.draw(gameDisplay)
 
             pygame.display.update()
 
@@ -530,9 +530,9 @@ def highScoreDisplayMenu(numCards):
             clock.tick(FPS)
 
 def testRecursion(scoreList):
-    def Sort(sub_li): 
-        sub_li.sort(key = lambda x: x[0]) 
-        return sub_li 
+    def Sort(sub_li):
+        sub_li.sort(key = lambda x: x[0])
+        return sub_li
 
     sortedScores = Sort(scoreList)
     print(sortedScores)
@@ -644,7 +644,7 @@ def optionMenu(previous_page):
                     pygame.mixer.music.stop()
                 elif pygame.mixer.music.get_busy() == False:
                     pygame.mixer.music.play(-1)
-              '''                  
+              '''
         pygame.display.update()
         clock.tick(FPS)
 	#pygame.display.update()
