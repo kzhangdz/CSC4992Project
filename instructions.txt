@@ -1,0 +1,20 @@
+Welcome to the Python Memory Game!
+In Memory, several cards are displayed face down on a
+board. Each card has a matching pair. The goal of a
+single player game is to match pairs until all cards on
+the board are matched. Players will flip up two cards at
+a time. If the cards do not match, they will flip back
+over. Be sure to remember their positions! If the cards
+do match, then points are added to the score, the cards
+will disappear, and the score multiplier is increased.
+The score multiplier helps add bonus points onto your
+score and will increase for every pair you match in a
+row. However, if you lose your matching streak, the
+multiplier will reset. Try to get the highest score
+possible! After a single player game, you can save your
+score, as well as view other people’s scores.
+In multiplayer, the rules are the same as a single
+player game, but players will take turns matching two
+cards at a time. The player with the highest score at
+the end wins the round.
+Good Luck!
