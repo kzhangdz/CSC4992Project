@@ -20,6 +20,7 @@ if __name__ == "__main__":
             else:
                 raise ValueError('Your input was not one of the options')
         except ValueError as err:
+            print(err)
             print('Start over')
 
     quit()
